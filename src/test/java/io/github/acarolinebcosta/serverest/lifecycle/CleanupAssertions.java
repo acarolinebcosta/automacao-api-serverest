@@ -48,10 +48,14 @@ public final class CleanupAssertions {
         );
     }
 
-    @Step("Confirmar ausência do usuário após a limpeza")
     public void assertUserAbsent() {
+        assertUserAbsent(context.getUserId());
+    }
+
+    @Step("Confirmar ausência do usuário {userId} após a limpeza")
+    public void assertUserAbsent(String userId) {
         ResponseAssertions.assertMessage(
-                userClient.findById(context.getUserId()),
+                userClient.findById(userId),
                 400,
                 ApiMessages.USER_NOT_FOUND,
                 "Confirmar ausência do usuário"

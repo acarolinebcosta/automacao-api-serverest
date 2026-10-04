@@ -6,16 +6,9 @@ import io.qameta.allure.Step;
 import io.restassured.response.Response;
 import lombok.RequiredArgsConstructor;
 
-/**
- * Application service for the cart domain.
- *
- * Orchestrates calls to {@link CartClient} and updates the {@link ScenarioContext}
- * with the created cart ID and the active cart request so later steps and
- * assertions can validate persistence, stock reservation and totals.
- *
- * Authentication comes from the scenario context. The token is populated during
- * authentication and reused across cart operations.
- */
+import java.util.List;
+import java.util.Map;
+
 @RequiredArgsConstructor
 public final class CartService {
 
@@ -60,6 +53,44 @@ public final class CartService {
     public Response cancelPurchase() {
         return cartClient.cancelPurchase(
                 context.getToken()
+        );
+    }
+
+    @Step("Tentar cadastrar carrinho sem produtos")
+    public Response attemptCreateWithoutProducts() {
+        return cartClient.createRaw(
+                context.getToken(),
+                Map.of()
+        );
+    }
+
+    @Step("Tentar cadastrar carrinho com quantidade zero")
+    public Response attemptCreateWithZeroQuantity(String productId) {
+        return cartClient.create(
+                context.getToken(),
+                new CartRequest(List.of(
+                        new CartItemRequest(productId, 0)
+                ))
+        );
+    }
+
+    @Step("Tentar cadastrar carrinho com quantidade negativa")
+    public Response attemptCreateWithNegativeQuantity(String productId) {
+        return cartClient.create(
+                context.getToken(),
+                new CartRequest(List.of(
+                        new CartItemRequest(productId, -1)
+                ))
+        );
+    }
+
+    @Step("Tentar cadastrar carrinho com produto de ID vazio")
+    public Response attemptCreateWithEmptyProductId() {
+        return cartClient.create(
+                context.getToken(),
+                new CartRequest(List.of(
+                        new CartItemRequest("", 1)
+                ))
         );
     }
 }

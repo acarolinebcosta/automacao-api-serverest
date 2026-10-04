@@ -33,4 +33,21 @@ public class ResponseAssertions {
                 )
                 .isEqualTo(expectedMessage);
     }
+    public void assertValidationError(
+            Response response,
+            int expectedStatus,
+            String fieldName,
+            String expectedMessage,
+            String operation
+    ) {
+        assertStatus(response, expectedStatus, operation);
+
+        assertThat(response.jsonPath().getMap("$").get(fieldName))
+                .withFailMessage(
+                        "%s: mensagem de validação inesperada para o campo '%s'; ver evidência HTTP sanitizada",
+                        operation,
+                        fieldName
+                )
+                .isEqualTo(expectedMessage);
+    }
 }

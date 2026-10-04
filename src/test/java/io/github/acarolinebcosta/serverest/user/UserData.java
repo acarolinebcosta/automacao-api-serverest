@@ -5,9 +5,6 @@ import io.github.acarolinebcosta.serverest.testdata.DataGenerator;
 
 public final class UserData {
 
-    private UserData() {
-    }
-
     public static UserRequest validAdmin() {
         return new UserBuilder()
                 .withName(DataGenerator.uniqueUserName())
@@ -15,5 +12,9 @@ public final class UserData {
                 .withPassword(EnvironmentConfig.testPassword())
                 .withAdministrator("true")
                 .build();
+    }
+
+    private UserData() {
+        throw new UnsupportedOperationException("Utility class");
     }
 }

@@ -5,6 +5,8 @@ import io.restassured.response.Response;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Map;
+
 /**
  * HTTP client for the ServeRest cart resource.
  *
@@ -24,6 +26,13 @@ public final class CartClient {
     private final ApiConfig config;
 
     public Response create(String token, CartRequest cart) {
+        return config.authenticated(token)
+                .body(cart)
+                .when()
+                .post("/carrinhos");
+    }
+
+    public Response createRaw(String token, Map<String, Object> cart) {
         return config.authenticated(token)
                 .body(cart)
                 .when()

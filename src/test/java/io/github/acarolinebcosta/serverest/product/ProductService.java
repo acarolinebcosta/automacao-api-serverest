@@ -3,11 +3,15 @@ package io.github.acarolinebcosta.serverest.product;
 import io.github.acarolinebcosta.serverest.api.ApiMessages;
 import io.github.acarolinebcosta.serverest.api.CreateResponse;
 import io.github.acarolinebcosta.serverest.context.ScenarioContext;
+import io.github.acarolinebcosta.serverest.testdata.DataGenerator;
 import io.github.acarolinebcosta.serverest.validation.ContractAssertions;
 import io.github.acarolinebcosta.serverest.validation.ResponseAssertions;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
 import lombok.RequiredArgsConstructor;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -18,7 +22,7 @@ public final class ProductService {
     private final ProductClient productClient;
     private final ContractAssertions contractAssertions;
 
-    @Step("CT03-CT04 - Criar produto e confirmar estoque inicial")
+    @Step("Criar produto e confirmar estoque inicial")
     public CreatedProduct createProduct(String alias, int price, int stock) {
         assertThat(alias)
                 .as("Alias do produto")
@@ -47,8 +51,7 @@ public final class ProductService {
         CreatedProduct product = new CreatedProduct(
                 alias,
                 createdProduct.id(),
-                request,
-                request.quantity()
+                request
         );
 
         context.addProduct(product);
@@ -115,6 +118,53 @@ public final class ProductService {
                 .orElseThrow(() -> new IllegalStateException(
                         "Produto não preparado no cenário: " + alias
                 ));
+    }
+
+    @Step("Tentar cadastrar produto sem o campo {string}")
+    public Response attemptCreateWithoutField(String field) {
+        Map<String, Object> payload = new LinkedHashMap<>();
+        payload.put("nome", DataGenerator.uniqueProductName());
+        payload.put("preco", 100);
+        payload.put("descricao", "produto negativo");
+        payload.put("quantidade", 10);
+        payload.remove(field);
+
+        return productClient.createRaw(context.getToken(), payload);
+    }
+
+    @Step("Tentar cadastrar produto com preço negativo")
+    public Response attemptCreateWithNegativePrice() {
+        return productClient.createRaw(context.getToken(), Map.of(
+                "nome", DataGenerator.uniqueProductName(),
+                "preco", -1,
+                "descricao", "produto negativo",
+                "quantidade", 10
+        ));
+    }
+
+    @Step("Tentar cadastrar produto com quantidade negativa")
+    public Response attemptCreateWithNegativeQuantity() {
+        return productClient.createRaw(context.getToken(), Map.of(
+                "nome", DataGenerator.uniqueProductName(),
+                "preco", 100,
+                "descricao", "produto negativo",
+                "quantidade", -1
+        ));
+    }
+
+    @Step("Tentar cadastrar produto com nome duplicado")
+    public Response attemptCreateWithDuplicateName(String existingName) {
+        return productClient.createRaw(context.getToken(), Map.of(
+                "nome", existingName,
+                "preco", 100,
+                "descricao", "produto duplicado",
+                "quantidade", 10
+        ));
+    }
+
+    @Step("Buscar produto com ID inexistente")
+    public Response findNonexistentProduct() {
+        return productClient.findById(DataGenerator.nonexistentProductId());
     }
 
     private void validatePersistence(CreatedProduct product) {

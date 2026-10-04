@@ -6,9 +6,6 @@ import java.util.List;
 
 public final class CartCalculations {
 
-    private CartCalculations() {
-    }
-
     public static int totalQuantity(CartRequest request) {
         return request.products().stream()
                 .mapToInt(CartItemRequest::quantity)
@@ -18,17 +15,30 @@ public final class CartCalculations {
     public static long totalPrice(CartRequest request, List<CreatedProduct> products) {
         return request.products().stream()
                 .mapToLong(item -> {
-                    CreatedProduct product = products.stream()
-                            .filter(created -> created.id().equals(item.productId()))
-                            .findFirst()
-                            .orElseThrow(() -> new IllegalStateException(
-                                    "Product was not created in the scenario: " + item.productId()));
-                    return Math.multiplyExact(product.request().price().longValue(), item.quantity().longValue());
+                    CreatedProduct product = requireProduct(products, item.productId());
+
+                    return Math.multiplyExact(
+                            product.request().price().longValue(),
+                            item.quantity().longValue()
+                    );
                 })
                 .reduce(0L, Math::addExact);
     }
 
     public static int stockAfterReservation(int initialStock, int requestedQuantity) {
         return Math.subtractExact(initialStock, requestedQuantity);
+    }
+
+    private static CreatedProduct requireProduct(List<CreatedProduct> products, String productId) {
+        return products.stream()
+                .filter(created -> created.id().equals(productId))
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException(
+                        "O produto não foi criado no cenário: " + productId
+                ));
+    }
+
+    private CartCalculations() {
+        throw new UnsupportedOperationException("Utility class");
     }
 }

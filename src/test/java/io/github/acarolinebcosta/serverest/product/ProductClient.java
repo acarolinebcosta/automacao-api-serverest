@@ -5,15 +5,8 @@ import io.restassured.response.Response;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
-/**
- * HTTP client for the ServeRest product resource.
- *
- * Encapsulates calls to the {@code /produtos} endpoint without orchestrating
- * business flows or performing response validations.
- *
- * Product creation and deletion require authentication, while lookup by ID
- * is publicly accessible.
- */
+import java.util.Map;
+
 @RequiredArgsConstructor
 public final class ProductClient {
 
@@ -23,6 +16,13 @@ public final class ProductClient {
     public Response create(String token, ProductRequest product) {
         return config.authenticated(token)
                 .body(product)
+                .when()
+                .post("/produtos");
+    }
+
+    public Response createRaw(String token, Map<String, Object> rawPayload) {
+        return config.authenticated(token)
+                .body(rawPayload)
                 .when()
                 .post("/produtos");
     }

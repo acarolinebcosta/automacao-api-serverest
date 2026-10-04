@@ -11,10 +11,6 @@ import lombok.RequiredArgsConstructor;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-/**
- * Step definitions for purchase completion and cancellation flows.
- * Scenario state is stored in {@link ScenarioContext}.
- */
 @RequiredArgsConstructor
 public final class PurchaseSteps {
 
@@ -52,6 +48,7 @@ public final class PurchaseSteps {
 
     @Entao("a compra deve ser concluída mantendo o estoque consumido")
     public void purchaseShouldKeepConsumedStock() {
+        // Then
         cartAssertions.assertCartAbsent();
 
         CartRequest activeRequest = context.getActiveCartRequest();

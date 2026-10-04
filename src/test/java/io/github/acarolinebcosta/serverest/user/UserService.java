@@ -6,11 +6,15 @@ import io.github.acarolinebcosta.serverest.auth.LoginClient;
 import io.github.acarolinebcosta.serverest.auth.LoginRequest;
 import io.github.acarolinebcosta.serverest.auth.LoginResponse;
 import io.github.acarolinebcosta.serverest.context.ScenarioContext;
+import io.github.acarolinebcosta.serverest.testdata.DataGenerator;
 import io.github.acarolinebcosta.serverest.validation.ContractAssertions;
 import io.github.acarolinebcosta.serverest.validation.ResponseAssertions;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
 import lombok.RequiredArgsConstructor;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -99,7 +103,7 @@ public final class UserService {
                 .isEqualTo(expectedUser.administrator());
     }
 
-    @Step("CT01 - Criar usuário administrador e confirmar persistência")
+    @Step("Criar usuário administrador e confirmar persistência")
     public void createAdmin() {
         prepareAdmin();
 
@@ -109,7 +113,7 @@ public final class UserService {
         validatePersistence();
     }
 
-    @Step("CT02 - Autenticar usuário criado e obter token")
+    @Step("Autenticar usuário criado e obter token")
     public void authenticate() {
         UserRequest user = requireUser();
 
@@ -156,6 +160,35 @@ public final class UserService {
     public void createAuthenticatedAdmin() {
         createAdmin();
         authenticate();
+    }
+
+    @Step("Tentar criar usuário com e-mail duplicado")
+    public Response attemptCreateWithDuplicateEmail(String existingEmail) {
+        Map<String, Object> payload = Map.of(
+                "nome", DataGenerator.uniqueUserName(),
+                "email", existingEmail,
+                "password", DataGenerator.uniquePassword(),
+                "administrador", "false"
+        );
+
+        return userClient.createRaw(payload);
+    }
+
+    @Step("Tentar criar usuário sem o campo {string}")
+    public Response attemptCreateWithoutField(String field) {
+        Map<String, Object> payload = new LinkedHashMap<>();
+        payload.put("nome", DataGenerator.uniqueUserName());
+        payload.put("email", DataGenerator.uniqueEmail());
+        payload.put("password", DataGenerator.uniquePassword());
+        payload.put("administrador", "true");
+        payload.remove(field);
+
+        return userClient.createRaw(payload);
+    }
+
+    @Step("Buscar usuário com ID inexistente")
+    public Response findNonexistentUser() {
+        return userClient.findById(DataGenerator.nonexistentUserId());
     }
 
     private UserRequest requireUser() {

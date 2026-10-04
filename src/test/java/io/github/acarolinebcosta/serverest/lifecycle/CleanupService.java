@@ -18,13 +18,6 @@ import java.util.function.Supplier;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-/**
- * Cleans resources created during the scenario and accumulates failures so the
- * lifecycle hook can report all cleanup issues instead of stopping at the first one.
- *
- * HTTP clients are accessed directly because cleanup is infrastructure behavior,
- * not part of the business flow under test.
- */
 @RequiredArgsConstructor
 public final class CleanupService {
 
@@ -73,6 +66,14 @@ public final class CleanupService {
                         )
                 ));
             }
+        }
+
+        for (String auxiliaryUserId : context.getAuxiliaryUserIds()) {
+            attempt(failures, () -> deleteAndVerify(
+                    "Limpar usuário auxiliar",
+                    () -> userClient.delete(auxiliaryUserId),
+                    () -> cleanupAssertions.assertUserAbsent(auxiliaryUserId)
+            ));
         }
 
         if (context.getUserId() != null) {

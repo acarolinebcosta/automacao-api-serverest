@@ -32,6 +32,7 @@ public final class CartSteps {
 
     @Dado("que o usuário já possui um carrinho")
     public void userAlreadyHasCart() {
+        // Given
         userService.createAuthenticatedAdmin();
         productService.createProduct(ProductAliases.MAIN, 100, 10);
         requestCartWithMainProduct(3);
@@ -46,6 +47,7 @@ public final class CartSteps {
 
     @Quando("tenta criar um carrinho com produto inexistente")
     public void tryToCreateCartWithNonexistentProduct() {
+        // When
         String productId = DataGenerator.nonexistentProductId();
         productService.assertNonexistent(productId);
         sendRequest(
@@ -56,6 +58,7 @@ public final class CartSteps {
 
     @Quando("o usuário solicita uma quantidade superior ao estoque")
     public void requestMoreThanAvailableStock() {
+        // When
         CreatedProduct product = productService.getByAlias(ProductAliases.MAIN);
         int quantity = Math.addExact(product.initialStock(), 1);
         requestCartWithMainProduct(quantity);
@@ -85,6 +88,7 @@ public final class CartSteps {
 
     @Quando("o usuário solicita múltiplos produtos excedendo um dos estoques")
     public void requestMultipleProductsExceedingOneStock() {
+        // When
         CreatedProduct secondProduct = productService.getByAlias(ProductAliases.MULTI_B);
         int excessiveQuantity = Math.addExact(secondProduct.initialStock(), 1);
         requestTwoProducts(2, excessiveQuantity);
@@ -92,6 +96,7 @@ public final class CartSteps {
 
     @Entao("a operação deve ser rejeitada preservando o primeiro carrinho")
     public void secondCartShouldBeRejected() {
+        // Then
         cartAssertions.assertRejection(requireCreationResponse(), expectedRejection);
 
         CartRequest firstRequest = context.getActiveCartRequest();
@@ -117,6 +122,7 @@ public final class CartSteps {
 
     @Entao("a criação deve resultar em {string}")
     public void boundaryResultShouldBe(String expectedResult) {
+        // Then
         switch (expectedResult) {
             case "sucesso" -> assertSuccessfulCreationAndCancellation();
             case "rejeitado" -> creationShouldBeRejectedWithoutChangingAnyStock();

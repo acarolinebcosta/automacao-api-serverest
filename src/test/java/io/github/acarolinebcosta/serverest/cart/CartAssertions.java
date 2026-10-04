@@ -112,7 +112,7 @@ public final class CartAssertions {
                     .findFirst()
                     .orElseThrow();
 
-            CreatedProduct product = findCreatedProduct(expectedItem.productId());
+            CreatedProduct product = context.requireProduct(expectedItem.productId());
 
             assertThat(actualItem.quantity())
                     .as("Quantidade do produto %s", expectedItem.productId())
@@ -178,15 +178,6 @@ public final class CartAssertions {
         assertThat(cartList.quantity())
                 .as("%s - quantidade", message)
                 .isZero();
-    }
-
-    private CreatedProduct findCreatedProduct(String productId) {
-        return context.getProducts().stream()
-                .filter(product -> product.id().equals(productId))
-                .findFirst()
-                .orElseThrow(() -> new IllegalStateException(
-                        "O produto não foi criado no cenário: " + productId
-                ));
     }
 
     private record ExpectedTotals(int totalQuantity, long totalPrice) {

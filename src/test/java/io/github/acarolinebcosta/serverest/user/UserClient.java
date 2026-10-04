@@ -5,12 +5,8 @@ import io.restassured.response.Response;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
-/**
- * HTTP client for the ServeRest user resource.
- *
- * Encapsulates calls to the {@code /usuarios} endpoint without orchestrating
- * business flows or performing response validations.
- */
+import java.util.Map;
+
 @RequiredArgsConstructor
 public final class UserClient {
 
@@ -20,6 +16,13 @@ public final class UserClient {
     public Response create(UserRequest user) {
         return config.request()
                 .body(user)
+                .when()
+                .post("/usuarios");
+    }
+
+    public Response createRaw(Map<String, Object> rawPayload) {
+        return config.request()
+                .body(rawPayload)
                 .when()
                 .post("/usuarios");
     }

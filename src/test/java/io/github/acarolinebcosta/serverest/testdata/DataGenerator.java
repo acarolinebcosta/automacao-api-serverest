@@ -4,15 +4,16 @@ import java.util.UUID;
 
 public final class DataGenerator {
 
-    private DataGenerator() {
-    }
-
     public static String uniqueUserName() {
         return "QA User " + uniqueSuffix();
     }
 
     public static String uniqueEmail() {
         return "qa." + uniqueSuffix() + "@example.com";
+    }
+
+    public static String uniquePassword() {
+        return "Pwd" + uniqueSuffix();
     }
 
     public static String uniqueProductName() {
@@ -23,7 +24,15 @@ public final class DataGenerator {
         return uniqueSuffix().substring(0, 16);
     }
 
+    public static String nonexistentUserId() {
+        return uniqueSuffix().substring(0, 16);
+    }
+
     private static String uniqueSuffix() {
         return UUID.randomUUID().toString().replace("-", "");
+    }
+
+    private DataGenerator() {
+        throw new UnsupportedOperationException("Utility class");
     }
 }

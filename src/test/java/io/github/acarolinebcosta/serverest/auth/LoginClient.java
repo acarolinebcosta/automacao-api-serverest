@@ -5,12 +5,8 @@ import io.restassured.response.Response;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
-/**
- * HTTP client for the ServeRest authentication resource.
- *
- * Encapsulates calls to the {@code /login} endpoint without orchestrating
- * business flows or performing response validations.
- */
+import java.util.Map;
+
 @RequiredArgsConstructor
 public final class LoginClient {
 
@@ -20,6 +16,13 @@ public final class LoginClient {
     public Response login(LoginRequest login) {
         return config.request()
                 .body(login)
+                .when()
+                .post("/login");
+    }
+
+    public Response loginRaw(Map<String, Object> rawPayload) {
+        return config.request()
+                .body(rawPayload)
                 .when()
                 .post("/login");
     }

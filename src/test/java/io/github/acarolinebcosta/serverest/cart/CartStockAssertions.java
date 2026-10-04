@@ -20,7 +20,7 @@ public final class CartStockAssertions {
     @Step("Validar estoque reservado ou consumido")
     public void assertReserved(CartRequest request) {
         for (CartItemRequest item : request.products()) {
-            CreatedProduct product = findProduct(item.productId());
+            CreatedProduct product = context.requireProduct(item.productId());
             int expectedStock = CartCalculations.stockAfterReservation(
                     product.initialStock(),
                     item.quantity()
@@ -77,15 +77,6 @@ public final class CartStockAssertions {
                         requestedQuantity,
                         expectedStock)
                 .isEqualTo(expectedStock);
-    }
-
-    private CreatedProduct findProduct(String productId) {
-        return context.getProducts().stream()
-                .filter(product -> product.id().equals(productId))
-                .findFirst()
-                .orElseThrow(() -> new IllegalStateException(
-                        "O produto não foi criado no cenário: " + productId
-                ));
     }
 
     private record StockState(
