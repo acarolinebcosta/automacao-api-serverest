@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Produto persistido no ServeRest",
+  "type": "object",
+  "required": ["_id", "nome", "preco", "descricao", "quantidade"],
+  "properties": {
+    "_id": { "type": "string", "pattern": "^[A-Za-z0-9]{16}$" },
+    "nome": { "type": "string", "minLength": 1 },
+    "preco": { "type": "integer", "minimum": 1 },
+    "descricao": { "type": "string", "minLength": 1 },
+    "quantidade": { "type": "integer", "minimum": 0 }
+  },
+  "additionalProperties": true
+}

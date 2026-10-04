@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Coleção de carrinhos do ServeRest",
+  "type": "object",
+  "required": ["quantidade", "carrinhos"],
+  "properties": {
+    "quantidade": { "type": "integer", "minimum": 0 },
+    "carrinhos": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["_id", "idUsuario", "produtos", "precoTotal", "quantidadeTotal"],
+        "properties": {
+          "_id": { "type": "string", "pattern": "^[A-Za-z0-9]{16}$" },
+          "idUsuario": { "type": "string", "pattern": "^[A-Za-z0-9]{16}$" },
+          "precoTotal": { "type": "integer", "minimum": 1 },
+          "quantidadeTotal": { "type": "integer", "minimum": 1 },
+          "produtos": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": ["idProduto", "quantidade", "precoUnitario"],
+              "properties": {
+                "idProduto": { "type": "string", "pattern": "^[A-Za-z0-9]{16}$" },
+                "quantidade": { "type": "integer", "minimum": 1 },
+                "precoUnitario": { "type": "integer", "minimum": 1 }
+              },
+              "additionalProperties": true
+            }
+          }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}

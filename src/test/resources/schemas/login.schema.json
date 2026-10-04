@@ -1,0 +1,11 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Resposta de login do ServeRest",
+  "type": "object",
+  "required": ["message", "authorization"],
+  "properties": {
+    "message": { "type": "string", "minLength": 1 },
+    "authorization": { "type": "string", "minLength": 1, "pattern": "^Bearer " }
+  },
+  "additionalProperties": true
+}
