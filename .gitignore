@@ -7,3 +7,6 @@ __MACOSX/
 .allure/
 allure-results/
 allure-report/
+.env
+.env.*
+!.env.example
