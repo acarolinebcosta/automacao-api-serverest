@@ -22,86 +22,145 @@ public final class CartAssertions {
     private final EvidenceSanitizer evidenceSanitizer;
     private final ContractAssertions contractAssertions;
 
+    @Step("Validar criação do carrinho")
     public void assertCreation(Response response) {
-        ResponseAssertions.assertMessage(response, 201, ApiMessages.CREATE_SUCCESS, "Create cart");
+        ResponseAssertions.assertMessage(
+                response,
+                201,
+                ApiMessages.CREATE_SUCCESS,
+                "Criar carrinho"
+        );
+
         CreateResponse createdCart = response.as(CreateResponse.class);
 
-        assertThat(createdCart.id()).as("Created cart ID").isNotBlank();
+        assertThat(createdCart.id())
+                .as("ID do carrinho criado")
+                .isNotBlank();
+
         assertThat(context.getCartId())
-                .as("Cart ID stored in scenario context")
+                .as("ID do carrinho armazenado no contexto do cenário")
                 .isEqualTo(createdCart.id());
     }
 
+    @Step("Validar rejeição da criação do carrinho")
     public void assertRejection(Response response, String expectedMessage) {
-        ResponseAssertions.assertMessage(response, 400, expectedMessage, "Reject invalid cart creation");
+        ResponseAssertions.assertMessage(
+                response,
+                400,
+                expectedMessage,
+                "Rejeitar criação de carrinho inválido"
+        );
+
         assertThat(response.jsonPath().getString("_id"))
-                .as("Rejected cart creation must not return an ID")
+                .as("Uma criação de carrinho rejeitada não deve retornar ID")
                 .isNull();
     }
 
-    @Step("Validate persisted cart")
+    @Step("Validar carrinho persistido")
     public CartResponse assertPersistedCart(CartRequest expectedRequest) {
-        CartListResponse cartList = fetchCartList(cartService.findByUser(), "Find cart by user");
-        assertThat(cartList.carts()).as("Carts belonging to the scenario user").hasSize(1);
-        assertThat(cartList.quantity()).as("Number of carts returned").isEqualTo(cartList.carts().size());
+        CartListResponse cartList = fetchCartList(
+                cartService.findByUser(),
+                "Buscar carrinho por usuário"
+        );
+
+        assertThat(cartList.carts())
+                .as("Carrinhos pertencentes ao usuário do cenário")
+                .hasSize(1);
+
+        assertThat(cartList.quantity())
+                .as("Quantidade de carrinhos retornados")
+                .isEqualTo(cartList.carts().size());
 
         CartResponse cart = cartList.carts().getFirst();
-        assertThat(cart.id()).as("Persisted cart ID").isEqualTo(context.getCartId());
+
+        assertThat(cart.id())
+                .as("ID do carrinho persistido")
+                .isEqualTo(context.getCartId());
+
         assertOwner(cart);
         assertItems(cart, expectedRequest);
         assertTotals(cart, expectedRequest);
+
         return cart;
     }
 
-    @Step("Validate cart owner")
+    @Step("Validar proprietário do carrinho")
     public void assertOwner(CartResponse cart) {
-        assertThat(cart.userId()).as("Cart owner").isEqualTo(context.getUserId());
+        assertThat(cart.userId())
+                .as("Proprietário do carrinho")
+                .isEqualTo(context.getUserId());
     }
 
-    @Step("Validate cart items")
+    @Step("Validar itens do carrinho")
     public void assertItems(CartResponse cart, CartRequest expectedRequest) {
         assertThat(cart.products())
-                .as("Cart products")
+                .as("Produtos do carrinho")
                 .hasSize(expectedRequest.products().size());
-        assertThat(cart.products()).extracting(CartItemResponse::productId)
-                .as("Product IDs persisted in cart")
-                .containsExactlyInAnyOrderElementsOf(expectedRequest.products().stream()
-                        .map(CartItemRequest::productId).toList());
+
+        assertThat(cart.products())
+                .extracting(CartItemResponse::productId)
+                .as("IDs dos produtos persistidos no carrinho")
+                .containsExactlyInAnyOrderElementsOf(
+                        expectedRequest.products().stream()
+                                .map(CartItemRequest::productId)
+                                .toList()
+                );
 
         for (CartItemRequest expectedItem : expectedRequest.products()) {
             CartItemResponse actualItem = cart.products().stream()
                     .filter(item -> item.productId().equals(expectedItem.productId()))
-                    .findFirst().orElseThrow();
+                    .findFirst()
+                    .orElseThrow();
+
             CreatedProduct product = findCreatedProduct(expectedItem.productId());
 
             assertThat(actualItem.quantity())
-                    .as("Quantity for product %s", expectedItem.productId())
+                    .as("Quantidade do produto %s", expectedItem.productId())
                     .isEqualTo(expectedItem.quantity());
+
             assertThat(actualItem.unitPrice())
-                    .as("Unit price for product %s", expectedItem.productId())
+                    .as("Preço unitário do produto %s", expectedItem.productId())
                     .isEqualTo(product.request().price());
         }
     }
 
-    @Step("Validate cart totals")
+    @Step("Validar totais do carrinho")
     public void assertTotals(CartResponse cart, CartRequest expectedRequest) {
         int expectedQuantity = CartCalculations.totalQuantity(expectedRequest);
         long expectedPrice = CartCalculations.totalPrice(expectedRequest, context.getProducts());
-        Allure.addAttachment("Expected cart totals", "application/json",
-                evidenceSanitizer.sanitize(new ExpectedTotals(expectedQuantity, expectedPrice)), ".json");
 
-        assertThat(cart.totalQuantity()).as("Total quantity").isEqualTo(expectedQuantity);
-        assertThat(cart.totalPrice()).as("Total price must be returned").isNotNull();
-        assertThat(cart.totalPrice().longValue()).as("Total price").isEqualTo(expectedPrice);
+        Allure.addAttachment(
+                "Totais esperados do carrinho",
+                "application/json",
+                evidenceSanitizer.sanitize(new ExpectedTotals(expectedQuantity, expectedPrice)),
+                ".json"
+        );
+
+        assertThat(cart.totalQuantity())
+                .as("Quantidade total")
+                .isEqualTo(expectedQuantity);
+
+        assertThat(cart.totalPrice())
+                .as("O preço total deve ser retornado")
+                .isNotNull();
+
+        assertThat(cart.totalPrice().longValue())
+                .as("Preço total")
+                .isEqualTo(expectedPrice);
     }
 
-    @Step("Validate cart absence by user and created ID")
+    @Step("Validar ausência do carrinho por usuário e ID criado")
     public void assertCartAbsent() {
-        assertEmptyCartList(fetchCartList(cartService.findByUser(), "Find carts by user"),
-                "User must not have an active cart");
+        assertEmptyCartList(
+                fetchCartList(cartService.findByUser(), "Buscar carrinhos por usuário"),
+                "O usuário não deve possuir carrinho ativo"
+        );
+
         if (context.getCartId() != null) {
-            assertEmptyCartList(fetchCartList(cartService.findById(context.getCartId()), "Find removed cart by ID"),
-                    "Removed cart ID must not exist");
+            assertEmptyCartList(
+                    fetchCartList(cartService.findById(context.getCartId()), "Buscar carrinho removido por ID"),
+                    "O ID do carrinho removido não deve existir"
+            );
         }
     }
 
@@ -112,15 +171,22 @@ public final class CartAssertions {
     }
 
     private void assertEmptyCartList(CartListResponse cartList, String message) {
-        assertThat(cartList.carts()).as(message).isEmpty();
-        assertThat(cartList.quantity()).as("%s - quantity", message).isZero();
+        assertThat(cartList.carts())
+                .as(message)
+                .isEmpty();
+
+        assertThat(cartList.quantity())
+                .as("%s - quantidade", message)
+                .isZero();
     }
 
     private CreatedProduct findCreatedProduct(String productId) {
         return context.getProducts().stream()
                 .filter(product -> product.id().equals(productId))
                 .findFirst()
-                .orElseThrow(() -> new IllegalStateException("Product was not created in the scenario: " + productId));
+                .orElseThrow(() -> new IllegalStateException(
+                        "O produto não foi criado no cenário: " + productId
+                ));
     }
 
     private record ExpectedTotals(int totalQuantity, long totalPrice) {

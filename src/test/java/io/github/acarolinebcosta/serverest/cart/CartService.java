@@ -6,37 +6,60 @@ import io.qameta.allure.Step;
 import io.restassured.response.Response;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Application service for the cart domain.
+ *
+ * Orchestrates calls to {@link CartClient} and updates the {@link ScenarioContext}
+ * with the created cart ID and the active cart request so later steps and
+ * assertions can validate persistence, stock reservation and totals.
+ *
+ * Authentication comes from the scenario context. The token is populated during
+ * authentication and reused across cart operations.
+ */
 @RequiredArgsConstructor
 public final class CartService {
 
     private final ScenarioContext context;
     private final CartClient cartClient;
 
-    @Step("Create cart")
+    @Step("Criar carrinho")
     public Response create(CartRequest request) {
-        Response response = cartClient.create(context.getToken(), request);
+        Response response = cartClient.create(
+                context.getToken(),
+                request
+        );
+
         if (response.statusCode() == 201) {
-            context.setCartId(response.as(CreateResponse.class).id());
+            context.setCartId(
+                    response.as(CreateResponse.class).id()
+            );
             context.setActiveCartRequest(request);
         }
+
         return response;
     }
 
     public Response findByUser() {
-        return cartClient.findByUserId(context.getUserId());
+        return cartClient.findByUserId(
+                context.getUserId()
+        );
     }
 
     public Response findById(String cartId) {
         return cartClient.findById(cartId);
     }
 
-    @Step("Complete purchase")
+    @Step("Concluir compra")
     public Response completePurchase() {
-        return cartClient.completePurchase(context.getToken());
+        return cartClient.completePurchase(
+                context.getToken()
+        );
     }
 
-    @Step("Cancel purchase")
+    @Step("Cancelar compra")
     public Response cancelPurchase() {
-        return cartClient.cancelPurchase(context.getToken());
+        return cartClient.cancelPurchase(
+                context.getToken()
+        );
     }
 }

@@ -1,20 +1,36 @@
 package io.github.acarolinebcosta.serverest.validation;
 
 import io.restassured.response.Response;
+import lombok.experimental.UtilityClass;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public final class ResponseAssertions {
-    private ResponseAssertions() { }
+@UtilityClass
+public class ResponseAssertions {
 
-    public static void assertStatus(Response response, int expected, String operation) {
-        assertThat(response.statusCode()).as("%s: HTTP status", operation).isEqualTo(expected);
+    public void assertStatus(
+            Response response,
+            int expectedStatus,
+            String operation
+    ) {
+        assertThat(response.statusCode())
+                .as("%s: status HTTP", operation)
+                .isEqualTo(expectedStatus);
     }
 
-    public static void assertMessage(Response response, int expectedStatus, String expectedMessage, String operation) {
+    public void assertMessage(
+            Response response,
+            int expectedStatus,
+            String expectedMessage,
+            String operation
+    ) {
         assertStatus(response, expectedStatus, operation);
+
         assertThat(response.jsonPath().getString("message"))
-                .withFailMessage("%s: unexpected business message; see sanitized HTTP evidence", operation)
+                .withFailMessage(
+                        "%s: mensagem de negócio inesperada; ver evidência HTTP sanitizada",
+                        operation
+                )
                 .isEqualTo(expectedMessage);
     }
 }

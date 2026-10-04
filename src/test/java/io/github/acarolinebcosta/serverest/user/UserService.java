@@ -22,22 +22,20 @@ public final class UserService {
     private final LoginClient loginClient;
     private final ContractAssertions contractAssertions;
 
-    @Step("Prepare administrator user data")
+    @Step("Preparar dados do usuário administrador")
     public void prepareAdmin() {
         assertThat(context.getUser())
-                .as("Scenario must not already contain a user")
+                .as("O cenário não deve conter um usuário previamente")
                 .isNull();
 
         context.setUser(UserData.validAdmin());
     }
 
-    @Step("Create administrator user")
+    @Step("Criar usuário administrador")
     public Response createPreparedAdmin() {
-        assertThat(context.getUser())
-                .as("Administrator user data must be prepared before creation")
-                .isNotNull();
+        UserRequest user = requireUser();
 
-        Response response = userClient.create(context.getUser());
+        Response response = userClient.create(user);
 
         if (response.statusCode() == 201) {
             CreateResponse createdUser = response.as(CreateResponse.class);
@@ -47,63 +45,61 @@ public final class UserService {
         return response;
     }
 
-    @Step("Validate administrator user creation")
+    @Step("Validar criação do usuário administrador")
     public void validateCreation(Response response) {
         ResponseAssertions.assertStatus(
                 response,
                 201,
-                "Create administrator user"
+                "Criar usuário administrador"
         );
 
         assertThat(context.getUserId())
-                .as("Created user ID")
+                .as("ID do usuário criado")
                 .isNotBlank();
 
         ResponseAssertions.assertMessage(
                 response,
                 201,
                 ApiMessages.CREATE_SUCCESS,
-                "Create administrator user"
+                "Criar usuário administrador"
         );
     }
 
-    @Step("Validate persisted administrator user")
+    @Step("Validar persistência do usuário administrador")
     public void validatePersistence() {
-        assertThat(context.getUserId())
-                .as("Created user ID must be available before persistence validation")
-                .isNotBlank();
+        String userId = requireUserId();
+        UserRequest expectedUser = requireUser();
 
-        Response response = userClient.findById(context.getUserId());
+        Response response = userClient.findById(userId);
 
         ResponseAssertions.assertStatus(
                 response,
                 200,
-                "Find created user"
+                "Buscar usuário criado"
         );
 
         UserResponse persistedUser = response.as(UserResponse.class);
-        UserRequest expectedUser = context.getUser();
 
         assertThat(persistedUser.id())
-                .as("Persisted user ID")
-                .isEqualTo(context.getUserId());
+                .as("ID do usuário persistido")
+                .isEqualTo(userId);
 
         assertThat(persistedUser.name())
-                .as("Persisted user name")
+                .as("Nome do usuário persistido")
                 .isEqualTo(expectedUser.name());
 
         assertThat(persistedUser.email())
                 .withFailMessage(
-                        "Persisted user email differs from the request; values redacted"
+                        "O e-mail do usuário persistido difere da requisição; valores omitidos"
                 )
                 .isEqualTo(expectedUser.email());
 
         assertThat(persistedUser.administrator())
-                .as("Persisted administrator permission")
+                .as("Permissão de administrador persistida")
                 .isEqualTo(expectedUser.administrator());
     }
 
-    @Step("CT01 - Create administrator user and confirm persistence")
+    @Step("CT01 - Criar usuário administrador e confirmar persistência")
     public void createAdmin() {
         prepareAdmin();
 
@@ -113,46 +109,45 @@ public final class UserService {
         validatePersistence();
     }
 
-    @Step("CT02 - Authenticate created user and obtain token")
+    @Step("CT02 - Autenticar usuário criado e obter token")
     public void authenticate() {
-        assertThat(context.getUser())
-                .as("User must be created before authentication")
-                .isNotNull();
+        UserRequest user = requireUser();
 
         assertThat(context.getToken())
                 .withFailMessage(
-                        "Scenario already contains an authentication token; value redacted"
+                        "O cenário já contém um token de autenticação; valor omitido"
                 )
                 .isNull();
 
-        UserRequest user = context.getUser();
-
         Response response = loginClient.login(
-                new LoginRequest(user.email(), user.password())
+                new LoginRequest(
+                        user.email(),
+                        user.password()
+                )
         );
 
         ResponseAssertions.assertStatus(
                 response,
                 200,
-                "Authenticate created user"
+                "Autenticar usuário criado"
         );
 
         contractAssertions.validateLogin(response);
 
-        context.setToken(
-                response.as(LoginResponse.class).authorization()
-        );
+        LoginResponse loginResponse = response.as(LoginResponse.class);
 
         ResponseAssertions.assertMessage(
                 response,
                 200,
                 ApiMessages.LOGIN_SUCCESS,
-                "Authenticate created user"
+                "Autenticar usuário criado"
         );
+
+        context.setToken(loginResponse.authorization());
 
         assertThat(context.getToken())
                 .withFailMessage(
-                        "Authorization must be a nonblank Bearer token; value redacted"
+                        "A autorização deve conter um token Bearer não vazio; valor omitido"
                 )
                 .isNotBlank()
                 .startsWith("Bearer ");
@@ -161,5 +156,19 @@ public final class UserService {
     public void createAuthenticatedAdmin() {
         createAdmin();
         authenticate();
+    }
+
+    private UserRequest requireUser() {
+        return assertThat(context.getUser())
+                .as("Os dados do usuário administrador devem estar preparados")
+                .isNotNull()
+                .actual();
+    }
+
+    private String requireUserId() {
+        return assertThat(context.getUserId())
+                .as("O ID do usuário criado deve estar disponível")
+                .isNotBlank()
+                .actual();
     }
 }

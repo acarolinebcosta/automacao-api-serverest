@@ -25,8 +25,7 @@ public final class UserSteps {
 
     @Entao("o usuário deve ser criado com sucesso")
     public void administratorUserShouldBeCreated() {
-        assertCreationResponseAvailable();
-        userService.validateCreation(creationResponse);
+        userService.validateCreation(requireCreationResponse());
     }
 
     @Entao("os dados do usuário devem estar persistidos")
@@ -39,11 +38,13 @@ public final class UserSteps {
         userService.createAuthenticatedAdmin();
     }
 
-    private void assertCreationResponseAvailable() {
+    private Response requireCreationResponse() {
         if (creationResponse == null) {
             throw new IllegalStateException(
-                    "User creation response is not available"
+                    "A resposta de criação do usuário não está disponível"
             );
         }
+
+        return creationResponse;
     }
 }

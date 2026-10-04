@@ -18,46 +18,93 @@ public final class ProductService {
     private final ProductClient productClient;
     private final ContractAssertions contractAssertions;
 
-    @Step("CT03-CT04 - Create product and confirm initial stock")
+    @Step("CT03-CT04 - Criar produto e confirmar estoque inicial")
     public CreatedProduct createProduct(String alias, int price, int stock) {
-        assertThat(alias).as("Product alias").isNotBlank();
-        assertThat(context.getProducts()).extracting(CreatedProduct::alias)
-                .as("Product alias must be unique within the scenario").doesNotContain(alias);
+        assertThat(alias)
+                .as("Alias do produto")
+                .isNotBlank();
+
+        assertThat(context.getProducts())
+                .extracting(CreatedProduct::alias)
+                .as("O alias do produto deve ser único no cenário")
+                .doesNotContain(alias);
 
         ProductRequest request = ProductData.valid(price, stock);
         Response response = productClient.create(context.getToken(), request);
-        ResponseAssertions.assertStatus(response, 201, "Create product");
-        CreateResponse createdProduct = response.as(CreateResponse.class);
-        assertThat(createdProduct.id()).as("Created product ID").isNotBlank();
 
-        CreatedProduct product = new CreatedProduct(alias, createdProduct.id(), request, request.quantity());
+        ResponseAssertions.assertStatus(
+                response,
+                201,
+                "Criar produto"
+        );
+
+        CreateResponse createdProduct = response.as(CreateResponse.class);
+
+        assertThat(createdProduct.id())
+                .as("ID do produto criado")
+                .isNotBlank();
+
+        CreatedProduct product = new CreatedProduct(
+                alias,
+                createdProduct.id(),
+                request,
+                request.quantity()
+        );
+
         context.addProduct(product);
-        ResponseAssertions.assertMessage(response, 201, ApiMessages.CREATE_SUCCESS, "Create product");
+
+        ResponseAssertions.assertMessage(
+                response,
+                201,
+                ApiMessages.CREATE_SUCCESS,
+                "Criar produto"
+        );
+
         validatePersistence(product);
+
         return product;
     }
 
-    @Step("Find product and validate response")
+    @Step("Buscar produto e validar resposta")
     public ProductResponse findProduct(CreatedProduct product) {
         Response response = productClient.findById(product.id());
-        ResponseAssertions.assertStatus(response, 200, "Find product");
+
+        ResponseAssertions.assertStatus(
+                response,
+                200,
+                "Buscar produto"
+        );
+
         contractAssertions.validateProduct(response);
+
         ProductResponse persistedProduct = response.as(ProductResponse.class);
-        assertThat(persistedProduct.id()).as("Returned product ID").isEqualTo(product.id());
+
+        assertThat(persistedProduct.id())
+                .as("ID do produto retornado")
+                .isEqualTo(product.id());
+
         return persistedProduct;
     }
 
-    @Step("Confirm product does not exist")
+    @Step("Confirmar que o produto não existe")
     public void assertNonexistent(String id) {
-        ResponseAssertions.assertMessage(productClient.findById(id), 400,
-                ApiMessages.PRODUCT_NOT_FOUND, "Confirm nonexistent product");
+        ResponseAssertions.assertMessage(
+                productClient.findById(id),
+                400,
+                ApiMessages.PRODUCT_NOT_FOUND,
+                "Confirmar produto inexistente"
+        );
     }
 
-    @Step("Validate product stock")
+    @Step("Validar estoque do produto")
     public void assertStock(CreatedProduct product, int expectedStock) {
         assertThat(findProduct(product).quantity())
-                .as("Product stock: productId=%s, initial=%d, expected=%d",
-                        product.id(), product.initialStock(), expectedStock)
+                .as(
+                        "Estoque do produto: idProduto=%s, inicial=%d, esperado=%d",
+                        product.id(),
+                        product.initialStock(),
+                        expectedStock
+                )
                 .isEqualTo(expectedStock);
     }
 
@@ -65,16 +112,29 @@ public final class ProductService {
         return context.getProducts().stream()
                 .filter(product -> product.alias().equals(alias))
                 .findFirst()
-                .orElseThrow(() -> new IllegalStateException("Product was not prepared in the scenario: " + alias));
+                .orElseThrow(() -> new IllegalStateException(
+                        "Produto não preparado no cenário: " + alias
+                ));
     }
 
     private void validatePersistence(CreatedProduct product) {
         ProductResponse persistedProduct = findProduct(product);
         ProductRequest expectedProduct = product.request();
-        assertThat(persistedProduct.name()).as("Persisted product name").isEqualTo(expectedProduct.name());
-        assertThat(persistedProduct.description()).as("Persisted product description")
+
+        assertThat(persistedProduct.name())
+                .as("Nome do produto persistido")
+                .isEqualTo(expectedProduct.name());
+
+        assertThat(persistedProduct.description())
+                .as("Descrição do produto persistido")
                 .isEqualTo(expectedProduct.description());
-        assertThat(persistedProduct.price()).as("Persisted product price").isEqualTo(expectedProduct.price());
-        assertThat(persistedProduct.quantity()).as("Persisted initial product stock").isEqualTo(product.initialStock());
+
+        assertThat(persistedProduct.price())
+                .as("Preço do produto persistido")
+                .isEqualTo(expectedProduct.price());
+
+        assertThat(persistedProduct.quantity())
+                .as("Estoque inicial do produto persistido")
+                .isEqualTo(product.initialStock());
     }
 }
