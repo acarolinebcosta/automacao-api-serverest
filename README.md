@@ -47,47 +47,6 @@ Base URL padrão: `https://serverest.dev`. Configurável via `-DbaseUrl=<url>`. 
 | Carrinhos | `POST /carrinhos` · `GET /carrinhos` · `DELETE /carrinhos/concluir-compra` · `DELETE /carrinhos/cancelar-compra` |
 
 ---
-## Análise de qualidade
-
-### Cenários mais críticos e por quê
-
-| Cenário | Criticidade | Justificativa |
-|---|---|---|
-| Fluxo completo usuário → login → produto → carrinho → conclusão | Alta | É o fluxo de negócio obrigatório; quebra em qualquer ponto inviabiliza a compra |
-| Cancelamento de compra com restauração de estoque | Alta | Afeta diretamente o inventário; falha silenciosa gera inconsistência de dados |
-| Atomicidade em carrinho com múltiplos produtos | Alta | Um item com estoque insuficiente não pode gerar atualização parcial nos demais |
-| Limite de estoque (4/5/6 para estoque=5) | Média | Erros de fronteira (`>`, `>=`, `<`, `<=`) são comuns e silenciosos |
-| Segundo carrinho para o mesmo usuário | Média | Impede duplicidade de carrinhos ativos |
-
-### Riscos identificados
-
-- **Inconsistência de estoque:** operação rejeitada que altera o estoque parcialmente.
-- **Vazamento de credenciais:** tokens e senhas expostos em relatórios Allure.
-- **Dados órfãos:** recursos criados em cenários de falha que ficam persistidos na API pública.
-- **Contrato quebrado:** mudanças de schema não detectadas até o consumidor falhar.
-
-### O que foi testado
-
-- Fluxo principal ponta a ponta (criação, autenticação, produto, carrinho, conclusão e cancelamento).
-- Cenários negativos de validação de entrada em todos os domínios (usuário, login, produto, carrinho).
-- Condições de fronteira em estoque.
-- Atomicidade em carrinho com múltiplos produtos.
-- Integridade entre recursos (exclusão de produto/usuário em uso).
-- Autorização em endpoints protegidos (sem token / token inválido).
-- Contract testing via JSON Schema.
-- Sanitização de evidências com testes de regressão.
-
-### O que **não** foi testado (e por quê)
-
-| Item não coberto | Justificativa |
-|---|---|
-| Rate limiting | A ServeRest é uma API pública; testar pode bloquear execuções subsequentes |
-| Testes de carga e performance | Exigem ferramenta específica (k6, JMeter) e ambiente controlado, fora do escopo |
-| Fuzzing de payload | Baixo retorno para o fluxo de negócio; gera ruído em CI |
-| Permissões por perfil | A ServeRest não implementa RBAC — qualquer autenticado tem as mesmas permissões |
-| Respostas 5xx | Não são provocadas artificialmente; exigem indisponibilidade controlada do ambiente |
-| Fluxos de atualização (PUT) | Cobertos em cenário básico; upsert em ID inexistente foi validado e documentado |
----
 
 ## Estratégia de testes
 
@@ -103,6 +62,48 @@ As validações não se limitam ao status HTTP. Sempre que aplicável, a automa�
 - inexistência de efeitos colaterais em cenários rejeitados.
 
 Os resultados esperados são calculados de forma independente a partir dos dados controlados pela automação, sem reutilizar a resposta da API como fonte da expectativa.
+
+---
+## Análise de qualidade
+
+### Cenários mais críticos
+
+**Fluxo completo usuário → login → produto → carrinho → conclusão**
+É o fluxo de negócio obrigatório. Qualquer falha em qualquer etapa
+inviabiliza a compra. Valida encadeamento de dados (token, userId,
+productId) e persistência ponta a ponta.
+
+**Cancelamento com restauração de estoque**
+Afeta diretamente o inventário. Um bug silencioso aqui gera divergência
+entre o estoque real e o reportado pela API. O teste valida estoque
+antes e depois da operação.
+
+**Atomicidade em carrinho com múltiplos produtos (CT-MULTI-02)**
+Um item com estoque insuficiente não pode gerar atualização parcial nos
+demais. É o cenário que mais expõe problemas de transação.
+
+### Riscos identificados
+
+- **Inconsistência de estoque** em operações rejeitadas.
+- **Dados órfãos** deixados por cenários que falham no meio.
+- **Vazamento de credenciais** em relatórios Allure.
+- **Quebra de contrato** não detectada até o consumidor falhar.
+
+### O que foi testado
+
+Fluxo principal ponta a ponta, cenários negativos em todos os domínios,
+condições de fronteira de estoque, atomicidade, integridade entre
+recursos, autorização, contract testing via JSON Schema e sanitização
+de evidências.
+
+### O que não foi testado
+
+- **Rate limiting** — API pública; testar pode bloquear execuções.
+- **Performance e carga** — exigem ferramenta específica e ambiente controlado.
+- **Fuzzing de payload** — baixo retorno para o fluxo de negócio.
+- **Permissões por perfil** — a ServeRest não implementa RBAC.
+- **Respostas 5xx** — não provocadas artificialmente.
+---
 
 ### Cobertura solicitada
 
@@ -427,3 +428,13 @@ Não foram adicionadas camadas como interfaces, factories ou service locators qu
 ## Documentação complementar
 
 Estratégia, decisões de cobertura e critérios de priorização estão descritos neste próprio README. Para instruções operacionais, consulte as seções **Execução** e **Integração contínua**.
+
+## Evidências
+
+Screenshots do relatório Allure em `docs/evidence/screenshots/`:
+
+- Dashboard com a execução completa;
+- Detalhamento de um cenário E2E;
+- Evidência HTTP sanitizada com credenciais omitidas.
+
+Para gerar o relatório localmente: `mvn allure:serve`.
