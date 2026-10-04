@@ -88,7 +88,16 @@ Implementados com base em análise de risco, priorizando situações capazes de 
 | CT-MULTI-01 | Carrinho com múltiplos produtos | Totalização e gerenciamento independente de estoque |
 | CT-MULTI-02 | Um item sem estoque suficiente em solicitação múltipla | Atomicidade e prevenção de atualizações parciais |
 
-Esses cenários foram escolhidos para responder perguntas como: uma operação rejeitada altera o estoque? Um carrinho pode ser persistido parcialmente? Uma falha em um item afeta os demais? O cancelamento desfaz os efeitos da reserva?
+### Cenários negativos
+
+Cobrem validação de entrada e regras de negócio rejeitadas em todos os domínios.
+
+| Grupo | Casos | Cobertura |
+|---|---|---|
+| Usuário | 6 | E-mail duplicado, campos obrigatórios ausentes, ID inexistente |
+| Autenticação | 4 | Credenciais inválidas, campos ausentes |
+| Produto | 8 | Campos obrigatórios, preço/quantidade negativos, nome duplicado, ID inexistente |
+| Carrinho | 4 | Produtos ausentes, quantidade zero/negativa, ID de produto vazio |
 
 ### Condições de fronteira
 
@@ -124,7 +133,7 @@ nenhum carrinho criado
 - sanitização das evidências HTTP;
 - testes de regressão do sanitizador;
 - execução automática em CI;
-- preservação de resultados Surefire e Allure.
+- preservação de resultados Allure.
 
 ---
 
@@ -135,20 +144,22 @@ Organização por domínio, com responsabilidades técnicas compartilhadas em pa
 ```text
 src/test/java/io/github/acarolinebcosta/serverest/
 ├── api/           ApiConfig, ApiMessages, CreateResponse, MessageResponse
-├── auth/          LoginClient, LoginRequest, LoginResponse
-├── cart/          CartAssertions, CartBuilder, CartCalculations, CartClient,
-│                  CartRequest, CartResponse, CartService, CartSteps,
-│                  CartStockAssertions, PurchaseSteps, ...
+├── auth/          LoginClient, LoginNegativeSteps, LoginRequest, LoginResponse, LoginService
+├── cart/          CartAssertions, CartBuilder, CartCalculations, CartClient, CartNegativeSteps,
+│                  CartRequest, CartResponse, CartService, CartSteps, CartStockAssertions,
+│                  PurchaseSteps, ...
 ├── config/        EnvironmentConfig
 ├── context/       ScenarioContext
 ├── evidence/      EvidenceSanitizer, EvidenceSanitizerTest, SafeEvidenceFilter
 ├── lifecycle/     CleanupAssertions, CleanupService, ScenarioHooks
-├── product/       CreatedProduct, ProductAliases, ProductBuilder, ProductClient,
-│                  ProductData, ProductService, ProductSteps, ...
+├── product/       CreatedProduct, ProductAliases, ProductBuilder, ProductClient, ProductData,
+│                  ProductDataFactory, ProductNegativeSteps, ProductService, ProductSteps, ...
 ├── testdata/      DataGenerator
-├── user/          UserClient, UserData, UserService, UserSteps, ...
+├── user/          UserClient, UserData, UserDataFactory, UserNegativeSteps, UserService,
+│                  UserSteps, ...
 ├── validation/    ContractAssertions, ResponseAssertions
-└── runner/        CucumberTest
+├── runner/        CucumberTest
+└── CommonNegativeSteps.java
 ```
 
 ### Separação de responsabilidades
@@ -156,8 +167,9 @@ src/test/java/io/github/acarolinebcosta/serverest/
 | Camada | Responsabilidade | Exemplos |
 |---|---|---|
 | Clients | Comunicação HTTP, sem regra de negócio ou assert | `UserClient`, `LoginClient`, `ProductClient`, `CartClient` |
-| Services | Orquestram operações do domínio e atualizam o `ScenarioContext` | `UserService`, `ProductService`, `CartService` |
+| Services | Orquestram operações do domínio e atualizam o `ScenarioContext` | `UserService`, `ProductService`, `CartService`, `LoginService` |
 | Assertions | Centralizam validações específicas | `ResponseAssertions`, `ContractAssertions`, `CartAssertions`, `CartStockAssertions`, `CleanupAssertions` |
+| Steps | Traduzem Gherkin para services e assertions, sem regra de negócio | `*Steps`, `CommonNegativeSteps` |
 | Context | Estado do cenário (`user`, `userId`, `token`, `products`, `cartId`, requisição ativa) | `ScenarioContext` |
 | Lifecycle | Cleanup dos recursos e isolamento entre cenários | `CleanupService`, `ScenarioHooks` |
 
@@ -167,7 +179,20 @@ A instância do `ScenarioContext` é isolada por cenário pela injeção de depe
 
 ## BDD e contratos
 
-Features em `src/test/resources/features/`: `cadastro_usuario`, `fluxo_compra`, `fluxo_cancelamento`, `limites_estoque`, `multiplos_produtos`, `regras_carrinho`.
+Features em `src/test/resources/features/`:
+
+```text
+cadastro_usuario
+fluxo_compra
+fluxo_cancelamento
+limites_estoque
+multiplos_produtos
+regras_carrinho
+usuarios_negativos
+autenticacao_negativa
+produtos_negativos
+carrinhos_negativos
+```
 
 Cenários escritos em português para leitura da regra de negócio; classes, métodos e identificadores Java em inglês.
 
@@ -231,6 +256,7 @@ Esse passo baixa as dependências, compila o projeto e instala os artefatos no r
 | Preparar o projeto (obrigatório antes do primeiro teste) | `mvn install` |
 | Suíte completa | `mvn clean test` |
 | Somente sanitizador | `mvn -Dtest=EvidenceSanitizerTest test` |
+| Somente Cucumber | `mvn -Dtest=CucumberTest test` |
 | Outra URL | `mvn clean test -DbaseUrl=<url>` |
 | Timeout customizado | `mvn clean test -Dapi.timeout.ms=<ms>` |
 | Relatório Allure | `mvn allure:report` |
@@ -249,27 +275,46 @@ mvn allure:serve
 
 ---
 
+## Relatórios
+
+O relatório oficial da suíte é gerado pelo **Allure**:
+
+```bash
+mvn allure:serve
+```
+
+Os arquivos brutos ficam em `target/allure-results/` e são preservados no CI como artefato mesmo em caso de falha.
+
+> A pasta `target/surefire-reports/` contém artefatos do Maven que **não refletem os cenários BDD** — o engine do Cucumber reporta via Allure, não via Surefire. Para análise de resultados, consulte apenas o Allure.
+
+---
+
 ## Integração contínua
 
 Workflow em `.github/workflows/api-tests.yml`, executado em `push` para `main`, pull requests para `main` e execução manual.
 
 Ambiente: Ubuntu + Java 21 + Maven. A senha vem de GitHub Actions Secrets (`SERVEREST_TEST_PASSWORD`) e nunca é versionada.
 
-Após a execução, `target/surefire-reports/` e `target/allure-results/` são preservados mesmo em caso de falha.
+Após a execução, `target/allure-results/` é preservado como artefato mesmo em caso de falha.
 
 ---
 
 ## Resultado atual
 
 ```text
-Tests run: 19
+Tests run: 41
 Failures: 0
 Errors: 0
 Skipped: 0
 BUILD SUCCESS
 ```
 
-Composição: `12 execuções BDD de integração` + `7 testes técnicos do EvidenceSanitizer` = 19. Os 19 testes **não** representam 19 cenários de negócio.
+Composição:
+
+- **34 cenários BDD** de integração distribuídos em 10 features;
+- **7 testes técnicos** do `EvidenceSanitizer`.
+
+Tempo médio de execução local: **~4 min 30 s**.
 
 ---
 
@@ -311,9 +356,9 @@ Evitaria tentar reproduzir repetidamente pela interface. Em problema intermitent
 
 A estratégia atual prioriza o fluxo solicitado e regras críticas de carrinho. Como evolução:
 
-- autenticação com credenciais inválidas;
-- acesso a recursos protegidos sem token, com token inválido ou expirado;
-- validações adicionais de campos obrigatórios, formatos e tipos;
+- acesso a recursos protegidos com token válido de usuário comum (permissões);
+- token expirado;
+- regras específicas de exclusão de recursos em uso (produto/usuário com carrinho ativo);
 - limites adicionais de payload;
 - testes de performance, carga, resiliência e segurança.
 
@@ -340,8 +385,4 @@ Não foram adicionadas camadas como interfaces, factories ou service locators qu
 
 ## Documentação complementar
 
-```text
-docs/
-├── ESTRATEGIA-DE-TESTES.md   # riscos, priorização e decisões de cobertura
-└── EXECUCAO.md               # configuração, execução e relatórios
-```
+Estratégia, decisões de cobertura e critérios de priorização estão descritos neste próprio README. Para instruções operacionais, consulte as seções **Execução** e **Integração contínua**.
