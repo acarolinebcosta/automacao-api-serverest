@@ -1,0 +1,9 @@
+target/
+.DS_Store
+.idea/
+.vscode/
+*.iml
+__MACOSX/
+.allure/
+allure-results/
+allure-report/
