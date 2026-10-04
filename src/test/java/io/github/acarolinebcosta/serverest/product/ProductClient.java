@@ -1,11 +1,11 @@
 package io.github.acarolinebcosta.serverest.product;
 
+import java.util.Map;
+
 import io.github.acarolinebcosta.serverest.api.ApiConfig;
 import io.restassured.response.Response;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-
-import java.util.Map;
 
 @RequiredArgsConstructor
 public final class ProductClient {
@@ -40,4 +40,10 @@ public final class ProductClient {
                 .when()
                 .delete("/produtos/{id}");
     }
+    public Response deleteRaw(String token, String id) {
+    return config.authenticated(token)
+            .pathParam("id", id)
+            .when()
+            .delete("/produtos/{id}");
+}
 }

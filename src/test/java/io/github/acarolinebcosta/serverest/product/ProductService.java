@@ -1,5 +1,10 @@
 package io.github.acarolinebcosta.serverest.product;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import io.github.acarolinebcosta.serverest.api.ApiMessages;
 import io.github.acarolinebcosta.serverest.api.CreateResponse;
 import io.github.acarolinebcosta.serverest.context.ScenarioContext;
@@ -9,11 +14,6 @@ import io.github.acarolinebcosta.serverest.validation.ResponseAssertions;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
 import lombok.RequiredArgsConstructor;
-
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @RequiredArgsConstructor
 public final class ProductService {
@@ -187,4 +187,8 @@ public final class ProductService {
                 .as("Estoque inicial do produto persistido")
                 .isEqualTo(product.initialStock());
     }
+    @Step("Excluir produto")
+    public Response deleteProduct(CreatedProduct product) {
+        return productClient.delete(context.getToken(), product.id());
+}
 }

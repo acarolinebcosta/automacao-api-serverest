@@ -15,20 +15,16 @@ import static io.restassured.RestAssured.given;
 import static io.restassured.config.HttpClientConfig.httpClientConfig;
 import static io.restassured.config.ObjectMapperConfig.objectMapperConfig;
 
-/**
- * Central REST Assured configuration for the test suite.
- *
- * Reads the base URL and timeout from system properties, validates their
- * values and builds the {@link RequestSpecification} used by API clients.
- *
- * Each instance keeps its own configuration and shared
- * {@link EvidenceSanitizer}, allowing HTTP evidence to be sanitized across
- * requests within the same scenario.
- */
 public final class ApiConfig {
 
     private static final String DEFAULT_BASE_URL = "https://serverest.dev";
     private static final String DEFAULT_TIMEOUT_MS = "15000";
+
+    private static final String INVALID_BASE_URL_MESSAGE =
+            "baseUrl deve ser uma URL HTTP ou HTTPS válida";
+
+    private static final String INVALID_TIMEOUT_MESSAGE =
+            "api.timeout.ms deve ser um número inteiro positivo";
 
     private final String baseUrl;
     private final RestAssuredConfig configuration;
@@ -44,7 +40,7 @@ public final class ApiConfig {
         return given().spec(
                 new RequestSpecBuilder()
                         .setBaseUri(baseUrl)
-                        .setContentType(ContentType.JSON)
+                        .setContentType("application/json; charset=UTF-8")
                         .setAccept(ContentType.JSON)
                         .setConfig(configuration)
                         .addFilter(new SafeEvidenceFilter(sanitizer))
@@ -72,9 +68,7 @@ public final class ApiConfig {
         try {
             uri = URI.create(configuredBaseUrl);
         } catch (IllegalArgumentException failure) {
-            throw new IllegalArgumentException(
-                    "baseUrl deve ser uma URL HTTP ou HTTPS válida"
-            );
+            throw new IllegalArgumentException(INVALID_BASE_URL_MESSAGE);
         }
 
         boolean validScheme =
@@ -82,9 +76,7 @@ public final class ApiConfig {
                         || "http".equalsIgnoreCase(uri.getScheme());
 
         if (uri.getHost() == null || !validScheme) {
-            throw new IllegalArgumentException(
-                    "baseUrl deve ser uma URL HTTP ou HTTPS válida"
-            );
+            throw new IllegalArgumentException(INVALID_BASE_URL_MESSAGE);
         }
 
         return configuredBaseUrl;
@@ -126,15 +118,11 @@ public final class ApiConfig {
         try {
             timeout = Integer.parseInt(configuredTimeout);
         } catch (NumberFormatException failure) {
-            throw new IllegalArgumentException(
-                    "api.timeout.ms deve ser um número inteiro positivo"
-            );
+            throw new IllegalArgumentException(INVALID_TIMEOUT_MESSAGE);
         }
 
         if (timeout <= 0) {
-            throw new IllegalArgumentException(
-                    "api.timeout.ms deve ser um número inteiro positivo"
-            );
+            throw new IllegalArgumentException(INVALID_TIMEOUT_MESSAGE);
         }
 
         return timeout;

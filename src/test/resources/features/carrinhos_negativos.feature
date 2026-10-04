@@ -27,3 +27,4 @@ Funcionalidade: Validação de cenários negativos de carrinho
   Cenário: Validar que o cadastro de carrinho com produto de ID vazio é rejeitado
     Quando tento cadastrar um carrinho com produto de ID vazio
     Então a criação do carrinho deve ser rejeitada com status 400
+    E a mensagem "produtos[0].idProduto não pode ficar em branco" deve ser retornada para o campo "produtos[0].idProduto"

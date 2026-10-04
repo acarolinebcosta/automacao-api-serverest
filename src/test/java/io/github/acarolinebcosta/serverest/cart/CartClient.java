@@ -7,18 +7,6 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.Map;
 
-/**
- * HTTP client for the ServeRest cart resource.
- *
- * Encapsulates calls to the {@code /carrinhos} endpoints without orchestrating
- * business flows or performing response validations. These responsibilities
- * are handled by {@code CartService}, {@code CartAssertions} and
- * {@code ContractAssertions}.
- *
- * The following operations require an authentication token:
- * {@link #create(String, CartRequest)}, {@link #completePurchase(String)} and
- * {@link #cancelPurchase(String)}. Queries by user or cart ID are public.
- */
 @RequiredArgsConstructor
 public final class CartClient {
 

@@ -1,12 +1,11 @@
 package io.github.acarolinebcosta.serverest.cart;
 
-import io.cucumber.java.pt.Entao;
-import io.cucumber.java.pt.Quando;
 import io.github.acarolinebcosta.serverest.context.ScenarioContext;
 import io.github.acarolinebcosta.serverest.product.ProductAliases;
 import io.github.acarolinebcosta.serverest.product.ProductService;
 import io.github.acarolinebcosta.serverest.validation.ResponseAssertions;
-import io.restassured.response.Response;
+import io.cucumber.java.pt.Entao;
+import io.cucumber.java.pt.Quando;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -25,14 +24,18 @@ public final class CartNegativeSteps {
     public void attemptCreateCartWithZeroQuantity() {
         String productId = productService.getByAlias(ProductAliases.MAIN).id();
 
-        context.setLastResponse(cartService.attemptCreateWithZeroQuantity(productId));
+        context.setLastResponse(
+                cartService.attemptCreateWithZeroQuantity(productId)
+        );
     }
 
     @Quando("tento cadastrar um carrinho com quantidade negativa")
     public void attemptCreateCartWithNegativeQuantity() {
         String productId = productService.getByAlias(ProductAliases.MAIN).id();
 
-        context.setLastResponse(cartService.attemptCreateWithNegativeQuantity(productId));
+        context.setLastResponse(
+                cartService.attemptCreateWithNegativeQuantity(productId)
+        );
     }
 
     @Quando("tento cadastrar um carrinho com produto de ID vazio")
@@ -42,8 +45,10 @@ public final class CartNegativeSteps {
 
     @Entao("a criação do carrinho deve ser rejeitada com status 400")
     public void cartCreationShouldBeRejected() {
-        Response response = context.getLastResponse();
-
-        ResponseAssertions.assertStatus(response, 400, "Rejeitar criação de carrinho");
+        ResponseAssertions.assertStatus(
+                context.getLastResponse(),
+                400,
+                "Rejeitar criação de carrinho"
+        );
     }
 }

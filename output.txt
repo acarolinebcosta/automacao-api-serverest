@@ -1,0 +1,995 @@
+[INFO] Scanning for projects...
+[INFO] Loaded 23983 auto-discovered prefixes for remote repository central (prefixes-central.txt)
+[INFO] 
+[INFO] ---------< io.github.acarolinebcosta:automacao-api-serverest >----------
+[INFO] Building ServeRest API Quality Automation 1.0.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.5.0:clean (default-clean) @ automacao-api-serverest ---
+[INFO] Deleting /Users/anacosta/Downloads/automacao-api-serverest/target
+[INFO] 
+[INFO] --- resources:3.5.0:resources (default-resources) @ automacao-api-serverest ---
+[INFO] skip non existing resourceDirectory /Users/anacosta/Downloads/automacao-api-serverest/src/main/resources
+[INFO] 
+[INFO] --- compiler:3.15.0:compile (default-compile) @ automacao-api-serverest ---
+[INFO] Loaded 74 auto-discovered prefixes for remote repository apache.snapshots (prefixes-apache.snapshots.txt)
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- resources:3.5.0:testResources (default-testResources) @ automacao-api-serverest ---
+[INFO] Copying 19 resources from src/test/resources to target/test-classes
+[INFO] 
+[INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ automacao-api-serverest ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 60 source files with javac [debug release 21] to target/test-classes
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by lombok.permit.Permit
+WARNING: Please consider reporting this to the maintainers of class lombok.permit.Permit
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+[INFO] 
+[INFO] --- surefire:3.5.6:test (default-test) @ automacao-api-serverest ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+java.lang.RuntimeException: The aspect weaver cannot determine any valid method to define auxiliary classes in arbitrary class loaders. Aspect weaving will *not* work, and you will see subsequent errors. Please search for corresponding issues at https://github.com/eclipse-aspectj/aspectj/issues. If there are none, please create a new one.
+	at org.aspectj.weaver.loadtime.ClassLoaderWeavingAdaptor.<clinit>(ClassLoaderWeavingAdaptor.java:1043)
+	at org.aspectj.weaver.loadtime.Aj.<clinit>(Aj.java:267)
+	at org.aspectj.weaver.loadtime.ClassPreProcessorAgentAdapter.<clinit>(ClassPreProcessorAgentAdapter.java:27)
+	at org.aspectj.weaver.loadtime.Agent.<clinit>(Agent.java:34)
+	at java.base/jdk.internal.misc.Unsafe.ensureClassInitialized0(Native Method)
+	at java.base/jdk.internal.misc.Unsafe.ensureClassInitialized(Unsafe.java:1195)
+	at java.base/jdk.internal.reflect.MethodHandleAccessorFactory.ensureClassInitialized(MethodHandleAccessorFactory.java:341)
+	at java.base/jdk.internal.reflect.MethodHandleAccessorFactory.newMethodAccessor(MethodHandleAccessorFactory.java:72)
+	at java.base/jdk.internal.reflect.ReflectionFactory.newMethodAccessor(ReflectionFactory.java:119)
+	at java.base/java.lang.reflect.Method.acquireMethodAccessor(Method.java:729)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.instrument/sun.instrument.InstrumentationImpl.loadClassAndStartAgent(InstrumentationImpl.java:544)
+	at java.instrument/sun.instrument.InstrumentationImpl.loadClassAndCallPremain(InstrumentationImpl.java:556)
+Caused by: java.lang.IllegalArgumentException: Unsupported class file major version 71
+	at aj.org.objectweb.asm.ClassReader.<init>(ClassReader.java:200)
+	at aj.org.objectweb.asm.ClassReader.<init>(ClassReader.java:180)
+	at aj.org.objectweb.asm.ClassReader.<init>(ClassReader.java:166)
+	at aj.org.objectweb.asm.ClassReader.<init>(ClassReader.java:288)
+	at org.aspectj.weaver.loadtime.ClassLoaderWeavingAdaptor.getMirrorClassBytes(ClassLoaderWeavingAdaptor.java:1180)
+	at org.aspectj.weaver.loadtime.ClassLoaderWeavingAdaptor.getMirrorClass(ClassLoaderWeavingAdaptor.java:1166)
+	at org.aspectj.weaver.loadtime.ClassLoaderWeavingAdaptor.getAccessibleObjectOverrideOffset(ClassLoaderWeavingAdaptor.java:1128)
+	at org.aspectj.weaver.loadtime.ClassLoaderWeavingAdaptor.createDefineClassMethodHandle(ClassLoaderWeavingAdaptor.java:1100)
+	at org.aspectj.weaver.loadtime.ClassLoaderWeavingAdaptor.<clinit>(ClassLoaderWeavingAdaptor.java:1040)
+	... 12 more
+[INFO] Running io.github.acarolinebcosta.serverest.evidence.EvidenceSanitizerTest
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.355 s -- in io.github.acarolinebcosta.serverest.evidence.EvidenceSanitizerTest
+[INFO] Running io.github.acarolinebcosta.serverest.runner.CucumberTest
+SLF4J(W): No SLF4J providers were found.
+SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
+
+@put @CT-PUT-01
+Cenário: Validar que a atualização de um usuário existente é aprovada # classpath:features/atualizacao.feature:6
+  ✘ Dado que existe um usuário administrador autenticado              # io.github.acarolinebcosta.serverest.user.UserSteps.authenticatedAdminExists()
+        java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+        	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+        	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+        	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+        	at io.github.acarolinebcosta.serverest.user.UserSteps.authenticatedAdminExists(UserSteps.java:38)
+        	at ✽.que existe um usuário administrador autenticado(classpath:features/atualizacao.feature:7)
+  ↷ Quando atualizo o usuário com dados válidos                       # io.github.acarolinebcosta.serverest.user.UpdateSteps.updateUserWithValidData()
+  ↷ Então a atualização deve ser aprovada com status 200              # io.github.acarolinebcosta.serverest.user.UpdateSteps.updateShouldBeApproved()
+  ↷ E a mensagem de atualização com sucesso deve ser retornada        # io.github.acarolinebcosta.serverest.user.UpdateSteps.updateSuccessMessageShouldBeReturned()
+
+@put @CT-PUT-02
+Cenário: Validar que a atualização de um usuário inexistente cria um novo registro # classpath:features/atualizacao.feature:13
+  ✘ Dado que existe um usuário administrador autenticado                           # io.github.acarolinebcosta.serverest.user.UserSteps.authenticatedAdminExists()
+        java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+        	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+        	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+        	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+        	at io.github.acarolinebcosta.serverest.user.UserSteps.authenticatedAdminExists(UserSteps.java:38)
+        	at ✽.que existe um usuário administrador autenticado(classpath:features/atualizacao.feature:14)
+  ↷ Quando atualizo um usuário com ID inexistente e dados válidos                  # io.github.acarolinebcosta.serverest.user.UpdateSteps.updateUserWithNonexistentId()
+  ↷ Então a atualização deve criar um novo registro com status 201                 # io.github.acarolinebcosta.serverest.user.UpdateSteps.updateShouldCreateNew()
+  ↷ E a mensagem de cadastro com sucesso deve ser retornada                        # io.github.acarolinebcosta.serverest.user.UpdateSteps.createSuccessMessageShouldBeReturned()
+
+@negativo @put @CT-PUT-03
+Cenário: Validar que a atualização de usuário sem o campo nome é rejeitada   # classpath:features/atualizacao.feature:20
+  ✘ Dado que existe um usuário administrador autenticado                     # io.github.acarolinebcosta.serverest.user.UserSteps.authenticatedAdminExists()
+        java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+        	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+        	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+        	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+        	at io.github.acarolinebcosta.serverest.user.UserSteps.authenticatedAdminExists(UserSteps.java:38)
+        	at ✽.que existe um usuário administrador autenticado(classpath:features/atualizacao.feature:21)
+  ↷ Quando atualizo o usuário sem o campo nome                               # io.github.acarolinebcosta.serverest.user.UpdateSteps.updateUserWithoutName()
+  ↷ Então a atualização deve ser rejeitada com status 400                    # io.github.acarolinebcosta.serverest.user.UpdateSteps.updateShouldBeRejectedWithStatus(int)
+  ↷ E a mensagem "nome é obrigatório" deve ser retornada para o campo "nome" # io.github.acarolinebcosta.serverest.CommonNegativeSteps.validationMessageShouldBeReturned(java.lang.String,java.lang.String)
+
+@put @CT-PUT-04
+Cenário: Validar que a atualização de usuário sem token é aceita pela API # classpath:features/atualizacao.feature:27
+  ✔ Quando atualizo um usuário sem token                                  # io.github.acarolinebcosta.serverest.user.UpdateSteps.updateUserWithoutToken()
+  ✔ Então a atualização deve criar um novo registro com status 201        # io.github.acarolinebcosta.serverest.user.UpdateSteps.updateShouldCreateNew()
+  ✔ E a mensagem de cadastro com sucesso deve ser retornada               # io.github.acarolinebcosta.serverest.user.UpdateSteps.createSuccessMessageShouldBeReturned()
+
+@negativo @login @CT-NEG-LOGIN-01
+Cenário: Validar que o login com senha incorreta é rejeitado   # classpath:features/autenticacao_negativa.feature:6
+  ✘ Dado que existe um usuário cadastrado com e-mail conhecido # io.github.acarolinebcosta.serverest.user.UserNegativeSteps.userWithKnownEmailExists()
+        java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+        	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+        	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+        	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+        	at io.github.acarolinebcosta.serverest.user.UserNegativeSteps.userWithKnownEmailExists(UserNegativeSteps.java:20)
+        	at ✽.que existe um usuário cadastrado com e-mail conhecido(classpath:features/autenticacao_negativa.feature:7)
+  ↷ Quando tento autenticar com uma senha incorreta            # io.github.acarolinebcosta.serverest.auth.LoginNegativeSteps.attemptLoginWithInvalidPassword()
+  ↷ Então a autenticação deve ser rejeitada com status 401     # io.github.acarolinebcosta.serverest.auth.LoginNegativeSteps.authenticationShouldBeRejectedWithStatus(int)
+  ↷ E a mensagem de credenciais inválidas deve ser retornada   # io.github.acarolinebcosta.serverest.auth.LoginNegativeSteps.invalidCredentialsMessageShouldBeReturned()
+
+@negativo @login @CT-NEG-LOGIN-02
+Cenário: Validar que o login com e-mail não cadastrado é rejeitado # classpath:features/autenticacao_negativa.feature:13
+  ✔ Quando tento autenticar com um e-mail não cadastrado           # io.github.acarolinebcosta.serverest.auth.LoginNegativeSteps.attemptLoginWithUnknownEmail()
+  ✔ Então a autenticação deve ser rejeitada com status 401         # io.github.acarolinebcosta.serverest.auth.LoginNegativeSteps.authenticationShouldBeRejectedWithStatus(int)
+  ✔ E a mensagem de credenciais inválidas deve ser retornada       # io.github.acarolinebcosta.serverest.auth.LoginNegativeSteps.invalidCredentialsMessageShouldBeReturned()
+
+@negativo @login @CT-NEG-LOGIN-03
+Cenário: Validar que o login sem o campo e-mail é rejeitado # classpath:features/autenticacao_negativa.feature:19
+  ✔ Quando tento autenticar sem o campo e-mail              # io.github.acarolinebcosta.serverest.auth.LoginNegativeSteps.attemptLoginWithoutEmail()
+  ✔ Então a autenticação deve ser rejeitada com status 400  # io.github.acarolinebcosta.serverest.auth.LoginNegativeSteps.authenticationShouldBeRejectedWithStatus(int)
+
+@negativo @login @CT-NEG-LOGIN-04
+Cenário: Validar que o login sem o campo senha é rejeitado # classpath:features/autenticacao_negativa.feature:24
+  ✔ Quando tento autenticar sem o campo senha              # io.github.acarolinebcosta.serverest.auth.LoginNegativeSteps.attemptLoginWithoutPassword()
+  ✔ Então a autenticação deve ser rejeitada com status 400 # io.github.acarolinebcosta.serverest.auth.LoginNegativeSteps.authenticationShouldBeRejectedWithStatus(int)
+
+@negativo @autorizacao @CT-NEG-AUTH-01
+Cenário: Validar que a criação de produto sem token é rejeitada # classpath:features/autorizacao.feature:6
+  ✔ Quando tento criar um produto sem token                     # io.github.acarolinebcosta.serverest.auth.AuthNegativeSteps.attemptCreateProductWithoutToken()
+  ✔ Então a operação deve ser rejeitada com status 401          # io.github.acarolinebcosta.serverest.CommonNegativeSteps.operationShouldBeRejectedWithStatus(int)
+  ✔ E a mensagem de token inválido deve ser retornada           # io.github.acarolinebcosta.serverest.auth.AuthNegativeSteps.invalidTokenMessageShouldBeReturned()
+
+@negativo @autorizacao @CT-NEG-AUTH-02
+Cenário: Validar que a criação de produto com token inválido é rejeitada # classpath:features/autorizacao.feature:12
+  ✔ Quando tento criar um produto com token inválido                     # io.github.acarolinebcosta.serverest.auth.AuthNegativeSteps.attemptCreateProductWithInvalidToken()
+  ✔ Então a operação deve ser rejeitada com status 401                   # io.github.acarolinebcosta.serverest.CommonNegativeSteps.operationShouldBeRejectedWithStatus(int)
+  ✔ E a mensagem de token inválido deve ser retornada                    # io.github.acarolinebcosta.serverest.auth.AuthNegativeSteps.invalidTokenMessageShouldBeReturned()
+
+@negativo @autorizacao @CT-NEG-AUTH-03
+Cenário: Validar que a exclusão de produto sem token é rejeitada # classpath:features/autorizacao.feature:18
+  ✔ Quando tento excluir um produto sem token                    # io.github.acarolinebcosta.serverest.auth.AuthNegativeSteps.attemptDeleteProductWithoutToken()
+  ✔ Então a operação deve ser rejeitada com status 401           # io.github.acarolinebcosta.serverest.CommonNegativeSteps.operationShouldBeRejectedWithStatus(int)
+  ✔ E a mensagem de token inválido deve ser retornada            # io.github.acarolinebcosta.serverest.auth.AuthNegativeSteps.invalidTokenMessageShouldBeReturned()
+
+@negativo @autorizacao @CT-NEG-AUTH-04
+Cenário: Validar que a criação de carrinho sem token é rejeitada # classpath:features/autorizacao.feature:24
+  ✔ Quando tento criar um carrinho sem token                     # io.github.acarolinebcosta.serverest.auth.AuthNegativeSteps.attemptCreateCartWithoutToken()
+  ✔ Então a operação deve ser rejeitada com status 401           # io.github.acarolinebcosta.serverest.CommonNegativeSteps.operationShouldBeRejectedWithStatus(int)
+  ✔ E a mensagem de token inválido deve ser retornada            # io.github.acarolinebcosta.serverest.auth.AuthNegativeSteps.invalidTokenMessageShouldBeReturned()
+
+@negativo @autorizacao @CT-NEG-AUTH-05
+Cenário: Validar que a conclusão de compra sem token é rejeitada # classpath:features/autorizacao.feature:30
+  ✔ Quando tento concluir uma compra sem token                   # io.github.acarolinebcosta.serverest.auth.AuthNegativeSteps.attemptCompletePurchaseWithoutToken()
+  ✔ Então a operação deve ser rejeitada com status 401           # io.github.acarolinebcosta.serverest.CommonNegativeSteps.operationShouldBeRejectedWithStatus(int)
+  ✔ E a mensagem de token inválido deve ser retornada            # io.github.acarolinebcosta.serverest.auth.AuthNegativeSteps.invalidTokenMessageShouldBeReturned()
+
+@negativo @autorizacao @CT-NEG-AUTH-06
+Cenário: Validar que o cancelamento de compra sem token é rejeitado # classpath:features/autorizacao.feature:36
+  ✔ Quando tento cancelar uma compra sem token                      # io.github.acarolinebcosta.serverest.auth.AuthNegativeSteps.attemptCancelPurchaseWithoutToken()
+  ✔ Então a operação deve ser rejeitada com status 401              # io.github.acarolinebcosta.serverest.CommonNegativeSteps.operationShouldBeRejectedWithStatus(int)
+  ✔ E a mensagem de token inválido deve ser retornada               # io.github.acarolinebcosta.serverest.auth.AuthNegativeSteps.invalidTokenMessageShouldBeReturned()
+
+@usuario @cadastro @CT-USUARIO-01 @CT01
+Cenário: Validar que um usuário administrador seja criado e persistido com sucesso # classpath:features/cadastro_usuario.feature:10
+  ✘ Dado que possuo os dados de um novo usuário administrador                      # io.github.acarolinebcosta.serverest.user.UserSteps.administratorUserDataExists()
+        java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+        	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+        	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+        	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+        	at io.github.acarolinebcosta.serverest.user.UserSteps.administratorUserDataExists(UserSteps.java:18)
+        	at ✽.que possuo os dados de um novo usuário administrador(classpath:features/cadastro_usuario.feature:11)
+  ↷ Quando realizo o cadastro do usuário                                           # io.github.acarolinebcosta.serverest.user.UserSteps.createAdministratorUser()
+  ↷ Então o usuário deve ser criado com sucesso                                    # io.github.acarolinebcosta.serverest.user.UserSteps.administratorUserShouldBeCreated()
+  ↷ E os dados do usuário devem estar persistidos                                  # io.github.acarolinebcosta.serverest.user.UserSteps.administratorUserShouldBePersisted()
+
+@negativo @carrinho @CT-NEG-CARRINHO-01
+Cenário: Validar que o cadastro de carrinho sem produtos é rejeitado                 # classpath:features/carrinhos_negativos.feature:9
+  ✘ Dado que existe um usuário administrador autenticado com produto disponível      # io.github.acarolinebcosta.serverest.product.ProductSteps.availableProductExists()
+        java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+        	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+        	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+        	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+        	at io.github.acarolinebcosta.serverest.product.ProductSteps.prepareMainProduct(ProductSteps.java:48)
+        	at io.github.acarolinebcosta.serverest.product.ProductSteps.availableProductExists(ProductSteps.java:24)
+        	at ✽.que existe um usuário administrador autenticado com produto disponível(classpath:features/carrinhos_negativos.feature:6)
+  ↷ Quando tento cadastrar um carrinho sem produtos                                  # io.github.acarolinebcosta.serverest.cart.CartNegativeSteps.attemptCreateCartWithoutProducts()
+  ↷ Então a criação do carrinho deve ser rejeitada com status 400                    # io.github.acarolinebcosta.serverest.cart.CartNegativeSteps.cartCreationShouldBeRejected()
+  ↷ E a mensagem "produtos é obrigatório" deve ser retornada para o campo "produtos" # io.github.acarolinebcosta.serverest.CommonNegativeSteps.validationMessageShouldBeReturned(java.lang.String,java.lang.String)
+
+@negativo @carrinho @CT-NEG-CARRINHO-02
+Cenário: Validar que o cadastro de carrinho com quantidade zero é rejeitado                                                    # classpath:features/carrinhos_negativos.feature:15
+  ✘ Dado que existe um usuário administrador autenticado com produto disponível                                                # io.github.acarolinebcosta.serverest.product.ProductSteps.availableProductExists()
+        java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+        	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+        	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+        	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+        	at io.github.acarolinebcosta.serverest.product.ProductSteps.prepareMainProduct(ProductSteps.java:48)
+        	at io.github.acarolinebcosta.serverest.product.ProductSteps.availableProductExists(ProductSteps.java:24)
+        	at ✽.que existe um usuário administrador autenticado com produto disponível(classpath:features/carrinhos_negativos.feature:6)
+  ↷ Quando tento cadastrar um carrinho com quantidade zero                                                                     # io.github.acarolinebcosta.serverest.cart.CartNegativeSteps.attemptCreateCartWithZeroQuantity()
+  ↷ Então a criação do carrinho deve ser rejeitada com status 400                                                              # io.github.acarolinebcosta.serverest.cart.CartNegativeSteps.cartCreationShouldBeRejected()
+  ↷ E a mensagem "produtos[0].quantidade deve ser um número positivo" deve ser retornada para o campo "produtos[0].quantidade" # io.github.acarolinebcosta.serverest.CommonNegativeSteps.validationMessageShouldBeReturned(java.lang.String,java.lang.String)
+
+@negativo @carrinho @CT-NEG-CARRINHO-03
+Cenário: Validar que o cadastro de carrinho com quantidade negativa é rejeitado                                                # classpath:features/carrinhos_negativos.feature:21
+  ✘ Dado que existe um usuário administrador autenticado com produto disponível                                                # io.github.acarolinebcosta.serverest.product.ProductSteps.availableProductExists()
+        java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+        	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+        	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+        	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+        	at io.github.acarolinebcosta.serverest.product.ProductSteps.prepareMainProduct(ProductSteps.java:48)
+        	at io.github.acarolinebcosta.serverest.product.ProductSteps.availableProductExists(ProductSteps.java:24)
+        	at ✽.que existe um usuário administrador autenticado com produto disponível(classpath:features/carrinhos_negativos.feature:6)
+  ↷ Quando tento cadastrar um carrinho com quantidade negativa                                                                 # io.github.acarolinebcosta.serverest.cart.CartNegativeSteps.attemptCreateCartWithNegativeQuantity()
+  ↷ Então a criação do carrinho deve ser rejeitada com status 400                                                              # io.github.acarolinebcosta.serverest.cart.CartNegativeSteps.cartCreationShouldBeRejected()
+  ↷ E a mensagem "produtos[0].quantidade deve ser um número positivo" deve ser retornada para o campo "produtos[0].quantidade" # io.github.acarolinebcosta.serverest.CommonNegativeSteps.validationMessageShouldBeReturned(java.lang.String,java.lang.String)
+
+@negativo @carrinho @CT-NEG-CARRINHO-04
+Cenário: Validar que o cadastro de carrinho com produto de ID vazio é rejeitado                                           # classpath:features/carrinhos_negativos.feature:27
+  ✘ Dado que existe um usuário administrador autenticado com produto disponível                                           # io.github.acarolinebcosta.serverest.product.ProductSteps.availableProductExists()
+        java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+        	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+        	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+        	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+        	at io.github.acarolinebcosta.serverest.product.ProductSteps.prepareMainProduct(ProductSteps.java:48)
+        	at io.github.acarolinebcosta.serverest.product.ProductSteps.availableProductExists(ProductSteps.java:24)
+        	at ✽.que existe um usuário administrador autenticado com produto disponível(classpath:features/carrinhos_negativos.feature:6)
+  ↷ Quando tento cadastrar um carrinho com produto de ID vazio                                                            # io.github.acarolinebcosta.serverest.cart.CartNegativeSteps.attemptCreateCartWithEmptyProductId()
+  ↷ Então a criação do carrinho deve ser rejeitada com status 400                                                         # io.github.acarolinebcosta.serverest.cart.CartNegativeSteps.cartCreationShouldBeRejected()
+  ↷ E a mensagem "produtos[0].idProduto não pode ficar em branco" deve ser retornada para o campo "produtos[0].idProduto" # io.github.acarolinebcosta.serverest.CommonNegativeSteps.validationMessageShouldBeReturned(java.lang.String,java.lang.String)
+
+@fluxo-principal @cancelamento @estoque @CT-E2E-02 @CT01 @CT02 @CT03 @CT04 @CT05 @CT06 @CT07 @CT08 @CT12 @CT13 @CT14 @CT15
+Cenário: Validar que o cancelamento de uma compra restaure o estoque            # classpath:features/fluxo_cancelamento.feature:10
+  ✘ Dado que existe um usuário administrador autenticado com produto disponível # io.github.acarolinebcosta.serverest.product.ProductSteps.availableProductExists()
+        java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+        	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+        	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+        	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+        	at io.github.acarolinebcosta.serverest.product.ProductSteps.prepareMainProduct(ProductSteps.java:48)
+        	at io.github.acarolinebcosta.serverest.product.ProductSteps.availableProductExists(ProductSteps.java:24)
+        	at ✽.que existe um usuário administrador autenticado com produto disponível(classpath:features/fluxo_cancelamento.feature:11)
+  ↷ Quando ele cria e cancela uma compra                                        # io.github.acarolinebcosta.serverest.cart.PurchaseSteps.cancelPurchase()
+  ↷ Então o carrinho deve ser removido e o estoque restaurado                   # io.github.acarolinebcosta.serverest.cart.PurchaseSteps.cancellationShouldRemoveCartAndRestoreStock()
+
+@fluxo-principal @compra @estoque @CT-E2E-01 @conclusao @CT01 @CT02 @CT03 @CT04 @CT05 @CT06 @CT07 @CT08 @CT09 @CT10 @CT11
+Cenário: Validar que a conclusão de uma compra mantenha o estoque consumido     # classpath:features/fluxo_compra.feature:10
+  ✘ Dado que existe um usuário administrador autenticado com produto disponível # io.github.acarolinebcosta.serverest.product.ProductSteps.availableProductExists()
+        java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+        	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+        	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+        	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+        	at io.github.acarolinebcosta.serverest.product.ProductSteps.prepareMainProduct(ProductSteps.java:48)
+        	at io.github.acarolinebcosta.serverest.product.ProductSteps.availableProductExists(ProductSteps.java:24)
+        	at ✽.que existe um usuário administrador autenticado com produto disponível(classpath:features/fluxo_compra.feature:11)
+  ↷ Quando ele realiza uma compra                                               # io.github.acarolinebcosta.serverest.cart.PurchaseSteps.completePurchase()
+  ↷ Então a compra deve ser concluída mantendo o estoque consumido              # io.github.acarolinebcosta.serverest.cart.PurchaseSteps.purchaseShouldKeepConsumedStock()
+
+@negativo @integridade @CT-NEG-INTEG-01
+Cenário: Validar que a exclusão de produto em carrinho ativo é rejeitada        # classpath:features/integridade.feature:6
+  ✘ Dado que existe um usuário administrador autenticado com produto disponível # io.github.acarolinebcosta.serverest.product.ProductSteps.availableProductExists()
+        java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+        	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+        	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+        	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+        	at io.github.acarolinebcosta.serverest.product.ProductSteps.prepareMainProduct(ProductSteps.java:48)
+        	at io.github.acarolinebcosta.serverest.product.ProductSteps.availableProductExists(ProductSteps.java:24)
+        	at ✽.que existe um usuário administrador autenticado com produto disponível(classpath:features/integridade.feature:7)
+  ↷ E o usuário possui um carrinho ativo com o produto principal                # io.github.acarolinebcosta.serverest.lifecycle.IntegrityNegativeSteps.activeCartWithMainProduct()
+  ↷ Quando tento excluir o produto principal que está em uso                    # io.github.acarolinebcosta.serverest.lifecycle.IntegrityNegativeSteps.attemptDeleteProductInUse()
+  ↷ Então a operação deve ser rejeitada com status 400                          # io.github.acarolinebcosta.serverest.CommonNegativeSteps.operationShouldBeRejectedWithStatus(int)
+  ↷ E a mensagem de produto em uso deve ser retornada                           # io.github.acarolinebcosta.serverest.lifecycle.IntegrityNegativeSteps.productInUseMessageShouldBeReturned()
+
+@negativo @integridade @CT-NEG-INTEG-02
+Cenário: Validar que a exclusão de usuário com carrinho ativo é rejeitada       # classpath:features/integridade.feature:14
+  ✘ Dado que existe um usuário administrador autenticado com produto disponível # io.github.acarolinebcosta.serverest.product.ProductSteps.availableProductExists()
+        java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+        	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+        	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+        	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+        	at io.github.acarolinebcosta.serverest.product.ProductSteps.prepareMainProduct(ProductSteps.java:48)
+        	at io.github.acarolinebcosta.serverest.product.ProductSteps.availableProductExists(ProductSteps.java:24)
+        	at ✽.que existe um usuário administrador autenticado com produto disponível(classpath:features/integridade.feature:15)
+  ↷ E o usuário possui um carrinho ativo com o produto principal                # io.github.acarolinebcosta.serverest.lifecycle.IntegrityNegativeSteps.activeCartWithMainProduct()
+  ↷ Quando tento excluir o usuário que possui carrinho                          # io.github.acarolinebcosta.serverest.lifecycle.IntegrityNegativeSteps.attemptDeleteUserWithCart()
+  ↷ Então a operação deve ser rejeitada com status 400                          # io.github.acarolinebcosta.serverest.CommonNegativeSteps.operationShouldBeRejectedWithStatus(int)
+  ↷ E a mensagem de usuário com carrinho deve ser retornada                     # io.github.acarolinebcosta.serverest.lifecycle.IntegrityNegativeSteps.userWithCartMessageShouldBeReturned()
+
+@carrinho @regra-negocio @estoque @boundary @CT19
+Esquema do Cenário: Validar que a criação do carrinho respeite o limite de estoque disponível # classpath:features/limites_estoque.feature:17
+  ✘ Dado que existe um produto com estoque 5                                                  # io.github.acarolinebcosta.serverest.product.ProductSteps.productWithStockExists(int)
+        java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+        	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+        	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+        	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+        	at io.github.acarolinebcosta.serverest.product.ProductSteps.prepareMainProduct(ProductSteps.java:48)
+        	at io.github.acarolinebcosta.serverest.product.ProductSteps.productWithStockExists(ProductSteps.java:34)
+        	at ✽.que existe um produto com estoque 5(classpath:features/limites_estoque.feature:11)
+  ↷ Quando o usuário solicita 4 unidades                                                      # io.github.acarolinebcosta.serverest.cart.CartSteps.requestCartWithMainProduct(int)
+  ↷ Então a criação deve resultar em "sucesso"                                                # io.github.acarolinebcosta.serverest.cart.CartSteps.boundaryResultShouldBe(java.lang.String)
+
+@carrinho @regra-negocio @estoque @boundary @CT19
+Esquema do Cenário: Validar que a criação do carrinho respeite o limite de estoque disponível # classpath:features/limites_estoque.feature:18
+  ✘ Dado que existe um produto com estoque 5                                                  # io.github.acarolinebcosta.serverest.product.ProductSteps.productWithStockExists(int)
+        java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+        	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+        	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+        	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+        	at io.github.acarolinebcosta.serverest.product.ProductSteps.prepareMainProduct(ProductSteps.java:48)
+        	at io.github.acarolinebcosta.serverest.product.ProductSteps.productWithStockExists(ProductSteps.java:34)
+        	at ✽.que existe um produto com estoque 5(classpath:features/limites_estoque.feature:11)
+  ↷ Quando o usuário solicita 5 unidades                                                      # io.github.acarolinebcosta.serverest.cart.CartSteps.requestCartWithMainProduct(int)
+  ↷ Então a criação deve resultar em "sucesso"                                                # io.github.acarolinebcosta.serverest.cart.CartSteps.boundaryResultShouldBe(java.lang.String)
+
+@carrinho @regra-negocio @estoque @boundary @CT19
+Esquema do Cenário: Validar que a criação do carrinho respeite o limite de estoque disponível # classpath:features/limites_estoque.feature:19
+  ✘ Dado que existe um produto com estoque 5                                                  # io.github.acarolinebcosta.serverest.product.ProductSteps.productWithStockExists(int)
+        java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+        	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+        	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+        	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+        	at io.github.acarolinebcosta.serverest.product.ProductSteps.prepareMainProduct(ProductSteps.java:48)
+        	at io.github.acarolinebcosta.serverest.product.ProductSteps.productWithStockExists(ProductSteps.java:34)
+        	at ✽.que existe um produto com estoque 5(classpath:features/limites_estoque.feature:11)
+  ↷ Quando o usuário solicita 6 unidades                                                      # io.github.acarolinebcosta.serverest.cart.CartSteps.requestCartWithMainProduct(int)
+  ↷ Então a criação deve resultar em "rejeitado"                                              # io.github.acarolinebcosta.serverest.cart.CartSteps.boundaryResultShouldBe(java.lang.String)
+
+@carrinho @multiplos-produtos @estoque @CT-MULTI-01 @cancelamento
+Cenário: Validar que um carrinho com múltiplos produtos calcule os totais e restaure os estoques # classpath:features/multiplos_produtos.feature:10
+  ✘ Dado que existem produtos disponíveis para compra                                            # io.github.acarolinebcosta.serverest.product.ProductSteps.multipleProductsAreAvailable()
+        java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+        	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+        	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+        	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+        	at io.github.acarolinebcosta.serverest.product.ProductSteps.prepareTwoProducts(ProductSteps.java:58)
+        	at io.github.acarolinebcosta.serverest.product.ProductSteps.multipleProductsAreAvailable(ProductSteps.java:39)
+        	at ✽.que existem produtos disponíveis para compra(classpath:features/multiplos_produtos.feature:11)
+  ↷ Quando o usuário adiciona múltiplos produtos ao carrinho                                     # io.github.acarolinebcosta.serverest.cart.CartSteps.requestCartWithMultipleProducts()
+  ↷ Então o carrinho deve calcular os totais e estoques corretamente                             # io.github.acarolinebcosta.serverest.cart.CartSteps.multipleProductTotalsAndStocksShouldBeCorrect()
+
+@carrinho @multiplos-produtos @estoque @CT-MULTI-02 @atomicidade @regra-negocio
+Cenário: Validar que uma solicitação com estoque insuficiente seja rejeitada sem alterar os estoques # classpath:features/multiplos_produtos.feature:16
+  ✘ Dado que existem produtos com estoques distintos para compra                                     # io.github.acarolinebcosta.serverest.product.ProductSteps.productsWithDifferentStocksExist()
+        java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+        	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+        	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+        	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+        	at io.github.acarolinebcosta.serverest.product.ProductSteps.prepareTwoProducts(ProductSteps.java:58)
+        	at io.github.acarolinebcosta.serverest.product.ProductSteps.productsWithDifferentStocksExist(ProductSteps.java:44)
+        	at ✽.que existem produtos com estoques distintos para compra(classpath:features/multiplos_produtos.feature:17)
+  ↷ Quando o usuário solicita múltiplos produtos excedendo um dos estoques                           # io.github.acarolinebcosta.serverest.cart.CartSteps.requestMultipleProductsExceedingOneStock()
+  ↷ Então a operação deve ser rejeitada sem alterar o estoque                                        # io.github.acarolinebcosta.serverest.cart.CartSteps.creationShouldBeRejectedWithoutChangingAnyStock()
+
+@negativo @produto @CT-NEG-PRODUTO-01
+Cenário: Validar que o cadastro de produto sem o campo nome é rejeitado      # classpath:features/produtos_negativos.feature:9
+  ✘ Dado que existe um usuário administrador autenticado                     # io.github.acarolinebcosta.serverest.user.UserSteps.authenticatedAdminExists()
+        java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+        	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+        	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+        	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+        	at io.github.acarolinebcosta.serverest.user.UserSteps.authenticatedAdminExists(UserSteps.java:38)
+        	at ✽.que existe um usuário administrador autenticado(classpath:features/produtos_negativos.feature:6)
+  ↷ Quando tento cadastrar um produto sem o campo "nome"                     # io.github.acarolinebcosta.serverest.product.ProductNegativeSteps.attemptCreateProductWithoutField(java.lang.String)
+  ↷ Então a criação do produto deve ser rejeitada com status 400             # io.github.acarolinebcosta.serverest.product.ProductNegativeSteps.productCreationShouldBeRejected()
+  ↷ E a mensagem "nome é obrigatório" deve ser retornada para o campo "nome" # io.github.acarolinebcosta.serverest.CommonNegativeSteps.validationMessageShouldBeReturned(java.lang.String,java.lang.String)
+
+@negativo @produto @CT-NEG-PRODUTO-02
+Cenário: Validar que o cadastro de produto sem o campo preço é rejeitado       # classpath:features/produtos_negativos.feature:15
+  ✘ Dado que existe um usuário administrador autenticado                       # io.github.acarolinebcosta.serverest.user.UserSteps.authenticatedAdminExists()
+        java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+        	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+        	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+        	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+        	at io.github.acarolinebcosta.serverest.user.UserSteps.authenticatedAdminExists(UserSteps.java:38)
+        	at ✽.que existe um usuário administrador autenticado(classpath:features/produtos_negativos.feature:6)
+  ↷ Quando tento cadastrar um produto sem o campo "preco"                      # io.github.acarolinebcosta.serverest.product.ProductNegativeSteps.attemptCreateProductWithoutField(java.lang.String)
+  ↷ Então a criação do produto deve ser rejeitada com status 400               # io.github.acarolinebcosta.serverest.product.ProductNegativeSteps.productCreationShouldBeRejected()
+  ↷ E a mensagem "preco é obrigatório" deve ser retornada para o campo "preco" # io.github.acarolinebcosta.serverest.CommonNegativeSteps.validationMessageShouldBeReturned(java.lang.String,java.lang.String)
+
+@negativo @produto @CT-NEG-PRODUTO-03
+Cenário: Validar que o cadastro de produto sem o campo descrição é rejeitado           # classpath:features/produtos_negativos.feature:21
+  ✘ Dado que existe um usuário administrador autenticado                               # io.github.acarolinebcosta.serverest.user.UserSteps.authenticatedAdminExists()
+        java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+        	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+        	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+        	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+        	at io.github.acarolinebcosta.serverest.user.UserSteps.authenticatedAdminExists(UserSteps.java:38)
+        	at ✽.que existe um usuário administrador autenticado(classpath:features/produtos_negativos.feature:6)
+  ↷ Quando tento cadastrar um produto sem o campo "descricao"                          # io.github.acarolinebcosta.serverest.product.ProductNegativeSteps.attemptCreateProductWithoutField(java.lang.String)
+  ↷ Então a criação do produto deve ser rejeitada com status 400                       # io.github.acarolinebcosta.serverest.product.ProductNegativeSteps.productCreationShouldBeRejected()
+  ↷ E a mensagem "descricao é obrigatório" deve ser retornada para o campo "descricao" # io.github.acarolinebcosta.serverest.CommonNegativeSteps.validationMessageShouldBeReturned(java.lang.String,java.lang.String)
+
+@negativo @produto @CT-NEG-PRODUTO-04
+Cenário: Validar que o cadastro de produto sem o campo quantidade é rejeitado            # classpath:features/produtos_negativos.feature:27
+  ✘ Dado que existe um usuário administrador autenticado                                 # io.github.acarolinebcosta.serverest.user.UserSteps.authenticatedAdminExists()
+        java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+        	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+        	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+        	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+        	at io.github.acarolinebcosta.serverest.user.UserSteps.authenticatedAdminExists(UserSteps.java:38)
+        	at ✽.que existe um usuário administrador autenticado(classpath:features/produtos_negativos.feature:6)
+  ↷ Quando tento cadastrar um produto sem o campo "quantidade"                           # io.github.acarolinebcosta.serverest.product.ProductNegativeSteps.attemptCreateProductWithoutField(java.lang.String)
+  ↷ Então a criação do produto deve ser rejeitada com status 400                         # io.github.acarolinebcosta.serverest.product.ProductNegativeSteps.productCreationShouldBeRejected()
+  ↷ E a mensagem "quantidade é obrigatório" deve ser retornada para o campo "quantidade" # io.github.acarolinebcosta.serverest.CommonNegativeSteps.validationMessageShouldBeReturned(java.lang.String,java.lang.String)
+
+@negativo @produto @CT-NEG-PRODUTO-05
+Cenário: Validar que o cadastro de produto com preço negativo é rejeitado                    # classpath:features/produtos_negativos.feature:33
+  ✘ Dado que existe um usuário administrador autenticado                                     # io.github.acarolinebcosta.serverest.user.UserSteps.authenticatedAdminExists()
+        java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+        	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+        	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+        	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+        	at io.github.acarolinebcosta.serverest.user.UserSteps.authenticatedAdminExists(UserSteps.java:38)
+        	at ✽.que existe um usuário administrador autenticado(classpath:features/produtos_negativos.feature:6)
+  ↷ Quando tento cadastrar um produto com preço negativo                                     # io.github.acarolinebcosta.serverest.product.ProductNegativeSteps.attemptCreateProductWithNegativePrice()
+  ↷ Então a criação do produto deve ser rejeitada com status 400                             # io.github.acarolinebcosta.serverest.product.ProductNegativeSteps.productCreationShouldBeRejected()
+  ↷ E a mensagem "preco deve ser um número positivo" deve ser retornada para o campo "preco" # io.github.acarolinebcosta.serverest.CommonNegativeSteps.validationMessageShouldBeReturned(java.lang.String,java.lang.String)
+
+@negativo @produto @CT-NEG-PRODUTO-06
+Cenário: Validar que o cadastro de produto com quantidade negativa é rejeitado                         # classpath:features/produtos_negativos.feature:39
+  ✘ Dado que existe um usuário administrador autenticado                                               # io.github.acarolinebcosta.serverest.user.UserSteps.authenticatedAdminExists()
+        java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+        	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+        	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+        	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+        	at io.github.acarolinebcosta.serverest.user.UserSteps.authenticatedAdminExists(UserSteps.java:38)
+        	at ✽.que existe um usuário administrador autenticado(classpath:features/produtos_negativos.feature:6)
+  ↷ Quando tento cadastrar um produto com quantidade negativa                                          # io.github.acarolinebcosta.serverest.product.ProductNegativeSteps.attemptCreateProductWithNegativeQuantity()
+  ↷ Então a criação do produto deve ser rejeitada com status 400                                       # io.github.acarolinebcosta.serverest.product.ProductNegativeSteps.productCreationShouldBeRejected()
+  ↷ E a mensagem "quantidade deve ser maior ou igual a 0" deve ser retornada para o campo "quantidade" # io.github.acarolinebcosta.serverest.CommonNegativeSteps.validationMessageShouldBeReturned(java.lang.String,java.lang.String)
+
+@negativo @produto @CT-NEG-PRODUTO-07
+Cenário: Validar que o cadastro de produto com nome duplicado é rejeitado # classpath:features/produtos_negativos.feature:45
+  ✘ Dado que existe um usuário administrador autenticado                  # io.github.acarolinebcosta.serverest.user.UserSteps.authenticatedAdminExists()
+        java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+        	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+        	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+        	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+        	at io.github.acarolinebcosta.serverest.user.UserSteps.authenticatedAdminExists(UserSteps.java:38)
+        	at ✽.que existe um usuário administrador autenticado(classpath:features/produtos_negativos.feature:6)
+  ↷ Dado que existe um produto cadastrado com nome conhecido              # io.github.acarolinebcosta.serverest.product.ProductNegativeSteps.productWithKnownNameExists()
+  ↷ Quando tento cadastrar outro produto com o mesmo nome                 # io.github.acarolinebcosta.serverest.product.ProductNegativeSteps.attemptCreateProductWithDuplicateName()
+  ↷ Então a criação do produto deve ser rejeitada com status 400          # io.github.acarolinebcosta.serverest.product.ProductNegativeSteps.productCreationShouldBeRejected()
+  ↷ E a mensagem "Já existe produto com esse nome" deve ser retornada     # io.github.acarolinebcosta.serverest.CommonNegativeSteps.businessMessageShouldBeReturned(java.lang.String)
+
+@negativo @produto @CT-NEG-PRODUTO-08
+Cenário: Validar que a busca de produto com ID inexistente é rejeitada # classpath:features/produtos_negativos.feature:52
+  ✘ Dado que existe um usuário administrador autenticado               # io.github.acarolinebcosta.serverest.user.UserSteps.authenticatedAdminExists()
+        java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+        	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+        	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+        	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+        	at io.github.acarolinebcosta.serverest.user.UserSteps.authenticatedAdminExists(UserSteps.java:38)
+        	at ✽.que existe um usuário administrador autenticado(classpath:features/produtos_negativos.feature:6)
+  ↷ Quando busco um produto com ID inexistente                         # io.github.acarolinebcosta.serverest.product.ProductNegativeSteps.findNonexistentProduct()
+  ↷ Então a operação deve ser rejeitada com status 400                 # io.github.acarolinebcosta.serverest.CommonNegativeSteps.operationShouldBeRejectedWithStatus(int)
+  ↷ E a mensagem "Produto não encontrado" deve ser retornada           # io.github.acarolinebcosta.serverest.CommonNegativeSteps.businessMessageShouldBeReturned(java.lang.String)
+
+@carrinho @regra-negocio @CT16 @estoque
+Cenário: Validar que um segundo carrinho para o mesmo usuário seja rejeitado # classpath:features/regras_carrinho.feature:10
+  ✘ Dado que o usuário já possui um carrinho                                 # io.github.acarolinebcosta.serverest.cart.CartSteps.userAlreadyHasCart()
+        java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+        	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+        	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+        	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+        	at io.github.acarolinebcosta.serverest.cart.CartSteps.userAlreadyHasCart(CartSteps.java:36)
+        	at ✽.que o usuário já possui um carrinho(classpath:features/regras_carrinho.feature:11)
+  ↷ Quando tenta criar outro carrinho                                        # io.github.acarolinebcosta.serverest.cart.CartSteps.tryToCreateSecondCart()
+  ↷ Então a operação deve ser rejeitada preservando o primeiro carrinho      # io.github.acarolinebcosta.serverest.cart.CartSteps.secondCartShouldBeRejected()
+
+@carrinho @regra-negocio @CT17
+Cenário: Validar que um carrinho com produto inexistente seja rejeitado # classpath:features/regras_carrinho.feature:16
+  ✘ Dado que existe um usuário administrador autenticado                # io.github.acarolinebcosta.serverest.user.UserSteps.authenticatedAdminExists()
+        java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+        	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+        	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+        	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+        	at io.github.acarolinebcosta.serverest.user.UserSteps.authenticatedAdminExists(UserSteps.java:38)
+        	at ✽.que existe um usuário administrador autenticado(classpath:features/regras_carrinho.feature:17)
+  ↷ Quando tenta criar um carrinho com produto inexistente              # io.github.acarolinebcosta.serverest.cart.CartSteps.tryToCreateCartWithNonexistentProduct()
+  ↷ Então a operação deve ser rejeitada sem criar carrinho              # io.github.acarolinebcosta.serverest.cart.CartSteps.creationShouldBeRejectedWithoutCart()
+
+@carrinho @regra-negocio @CT18 @estoque
+Cenário: Validar que uma quantidade superior ao estoque seja rejeitada sem alterar o estoque # classpath:features/regras_carrinho.feature:22
+  ✘ Dado que existe um produto com estoque limitado                                          # io.github.acarolinebcosta.serverest.product.ProductSteps.limitedStockProductExists()
+        java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+        	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+        	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+        	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+        	at io.github.acarolinebcosta.serverest.product.ProductSteps.prepareMainProduct(ProductSteps.java:48)
+        	at io.github.acarolinebcosta.serverest.product.ProductSteps.limitedStockProductExists(ProductSteps.java:29)
+        	at ✽.que existe um produto com estoque limitado(classpath:features/regras_carrinho.feature:23)
+  ↷ Quando o usuário solicita uma quantidade superior ao estoque                             # io.github.acarolinebcosta.serverest.cart.CartSteps.requestMoreThanAvailableStock()
+  ↷ Então a operação deve ser rejeitada sem alterar o estoque                                # io.github.acarolinebcosta.serverest.cart.CartSteps.creationShouldBeRejectedWithoutChangingAnyStock()
+
+@carrinho @regra-negocio @CT20 @estoque
+Cenário: Validar que produtos duplicados no mesmo carrinho sejam rejeitados sem alterar o estoque # classpath:features/regras_carrinho.feature:28
+  ✘ Dado que existe um produto disponível                                                         # io.github.acarolinebcosta.serverest.product.ProductSteps.availableProductExists()
+        java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+        	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+        	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+        	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+        	at io.github.acarolinebcosta.serverest.product.ProductSteps.prepareMainProduct(ProductSteps.java:48)
+        	at io.github.acarolinebcosta.serverest.product.ProductSteps.availableProductExists(ProductSteps.java:24)
+        	at ✽.que existe um produto disponível(classpath:features/regras_carrinho.feature:29)
+  ↷ Quando o usuário informa o mesmo produto duas vezes no carrinho                               # io.github.acarolinebcosta.serverest.cart.CartSteps.tryToCreateCartWithDuplicatedProduct()
+  ↷ Então a operação deve ser rejeitada sem alterar o estoque                                     # io.github.acarolinebcosta.serverest.cart.CartSteps.creationShouldBeRejectedWithoutChangingAnyStock()
+
+@negativo @usuario @CT-NEG-USUARIO-01
+Cenário: Validar que o cadastro de usuário com e-mail já utilizado é rejeitado # classpath:features/usuarios_negativos.feature:6
+  ✘ Dado que existe um usuário cadastrado com e-mail conhecido                 # io.github.acarolinebcosta.serverest.user.UserNegativeSteps.userWithKnownEmailExists()
+        java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+        	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+        	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+        	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+        	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+        	at io.github.acarolinebcosta.serverest.user.UserNegativeSteps.userWithKnownEmailExists(UserNegativeSteps.java:20)
+        	at ✽.que existe um usuário cadastrado com e-mail conhecido(classpath:features/usuarios_negativos.feature:7)
+  ↷ Quando tento cadastrar um novo usuário com o mesmo e-mail                  # io.github.acarolinebcosta.serverest.user.UserNegativeSteps.attemptCreateUserWithDuplicateEmail()
+  ↷ Então a criação do usuário deve ser rejeitada com status 400               # io.github.acarolinebcosta.serverest.user.UserNegativeSteps.userCreationShouldBeRejected()
+  ↷ E a mensagem de e-mail duplicado deve ser retornada                        # io.github.acarolinebcosta.serverest.user.UserNegativeSteps.duplicateEmailMessageShouldBeReturned()
+
+@negativo @usuario @CT-NEG-USUARIO-02
+Cenário: Validar que o cadastro de usuário sem o campo nome é rejeitado # classpath:features/usuarios_negativos.feature:13
+  ✔ Quando tento cadastrar um usuário sem o campo nome                  # io.github.acarolinebcosta.serverest.user.UserNegativeSteps.attemptCreateUserWithoutName()
+  ✔ Então a criação do usuário deve ser rejeitada com status 400        # io.github.acarolinebcosta.serverest.user.UserNegativeSteps.userCreationShouldBeRejected()
+
+@negativo @usuario @CT-NEG-USUARIO-03
+Cenário: Validar que o cadastro de usuário sem o campo e-mail é rejeitado # classpath:features/usuarios_negativos.feature:18
+  ✔ Quando tento cadastrar um usuário sem o campo e-mail                  # io.github.acarolinebcosta.serverest.user.UserNegativeSteps.attemptCreateUserWithoutEmail()
+  ✔ Então a criação do usuário deve ser rejeitada com status 400          # io.github.acarolinebcosta.serverest.user.UserNegativeSteps.userCreationShouldBeRejected()
+
+@negativo @usuario @CT-NEG-USUARIO-04
+Cenário: Validar que o cadastro de usuário sem o campo senha é rejeitado # classpath:features/usuarios_negativos.feature:23
+  ✔ Quando tento cadastrar um usuário sem o campo senha                  # io.github.acarolinebcosta.serverest.user.UserNegativeSteps.attemptCreateUserWithoutPassword()
+  ✔ Então a criação do usuário deve ser rejeitada com status 400         # io.github.acarolinebcosta.serverest.user.UserNegativeSteps.userCreationShouldBeRejected()
+
+@negativo @usuario @CT-NEG-USUARIO-05
+Cenário: Validar que o cadastro de usuário sem o campo administrador é rejeitado # classpath:features/usuarios_negativos.feature:28
+  ✔ Quando tento cadastrar um usuário sem o campo administrador                  # io.github.acarolinebcosta.serverest.user.UserNegativeSteps.attemptCreateUserWithoutAdministrator()
+  ✔ Então a criação do usuário deve ser rejeitada com status 400                 # io.github.acarolinebcosta.serverest.user.UserNegativeSteps.userCreationShouldBeRejected()
+
+@negativo @usuario @CT-NEG-USUARIO-06
+Cenário: Validar que a busca de usuário com ID inexistente é rejeitada # classpath:features/usuarios_negativos.feature:33
+  ✔ Quando busco um usuário com ID inexistente                         # io.github.acarolinebcosta.serverest.user.UserNegativeSteps.findNonexistentUser()
+  ✔ Então a operação deve ser rejeitada com status 400                 # io.github.acarolinebcosta.serverest.CommonNegativeSteps.operationShouldBeRejectedWithStatus(int)
+  ✔ E a mensagem de usuário não encontrado deve ser retornada          # io.github.acarolinebcosta.serverest.user.UserNegativeSteps.userNotFoundMessageShouldBeReturned()
+[ERROR] Tests run: 46, Failures: 0, Errors: 31, Skipped: 0, Time elapsed: 18.30 s <<< FAILURE! -- in io.github.acarolinebcosta.serverest.runner.CucumberTest
+[ERROR] io.github.acarolinebcosta.serverest.runner.CucumberTest.Validação de atualização de usuários via PUT - Validar que a atualização de um usuário existente é aprovada -- Time elapsed: 5.410 s <<< ERROR!
+java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+	at io.github.acarolinebcosta.serverest.user.UserSteps.authenticatedAdminExists(UserSteps.java:38)
+	at ✽.que existe um usuário administrador autenticado(classpath:features/atualizacao.feature:7)
+
+[ERROR] io.github.acarolinebcosta.serverest.runner.CucumberTest.Validação de atualização de usuários via PUT - Validar que a atualização de um usuário inexistente cria um novo registro -- Time elapsed: 0.008 s <<< ERROR!
+java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+	at io.github.acarolinebcosta.serverest.user.UserSteps.authenticatedAdminExists(UserSteps.java:38)
+	at ✽.que existe um usuário administrador autenticado(classpath:features/atualizacao.feature:14)
+
+[ERROR] io.github.acarolinebcosta.serverest.runner.CucumberTest.Validação de atualização de usuários via PUT - Validar que a atualização de usuário sem o campo nome é rejeitada -- Time elapsed: 0.011 s <<< ERROR!
+java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+	at io.github.acarolinebcosta.serverest.user.UserSteps.authenticatedAdminExists(UserSteps.java:38)
+	at ✽.que existe um usuário administrador autenticado(classpath:features/atualizacao.feature:21)
+
+[ERROR] io.github.acarolinebcosta.serverest.runner.CucumberTest.Validação de cenários negativos de autenticação - Validar que o login com senha incorreta é rejeitado -- Time elapsed: 0.007 s <<< ERROR!
+java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+	at io.github.acarolinebcosta.serverest.user.UserNegativeSteps.userWithKnownEmailExists(UserNegativeSteps.java:20)
+	at ✽.que existe um usuário cadastrado com e-mail conhecido(classpath:features/autenticacao_negativa.feature:7)
+
+[ERROR] io.github.acarolinebcosta.serverest.runner.CucumberTest.Cadastro de usuário - Validar que um usuário administrador seja criado e persistido com sucesso -- Time elapsed: 0.006 s <<< ERROR!
+java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+	at io.github.acarolinebcosta.serverest.user.UserSteps.administratorUserDataExists(UserSteps.java:18)
+	at ✽.que possuo os dados de um novo usuário administrador(classpath:features/cadastro_usuario.feature:11)
+
+[ERROR] io.github.acarolinebcosta.serverest.runner.CucumberTest.Validação de cenários negativos de carrinho - Validar que o cadastro de carrinho sem produtos é rejeitado -- Time elapsed: 0.008 s <<< ERROR!
+java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+	at io.github.acarolinebcosta.serverest.product.ProductSteps.prepareMainProduct(ProductSteps.java:48)
+	at io.github.acarolinebcosta.serverest.product.ProductSteps.availableProductExists(ProductSteps.java:24)
+	at ✽.que existe um usuário administrador autenticado com produto disponível(classpath:features/carrinhos_negativos.feature:6)
+
+[ERROR] io.github.acarolinebcosta.serverest.runner.CucumberTest.Validação de cenários negativos de carrinho - Validar que o cadastro de carrinho com quantidade zero é rejeitado -- Time elapsed: 0.012 s <<< ERROR!
+java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+	at io.github.acarolinebcosta.serverest.product.ProductSteps.prepareMainProduct(ProductSteps.java:48)
+	at io.github.acarolinebcosta.serverest.product.ProductSteps.availableProductExists(ProductSteps.java:24)
+	at ✽.que existe um usuário administrador autenticado com produto disponível(classpath:features/carrinhos_negativos.feature:6)
+
+[ERROR] io.github.acarolinebcosta.serverest.runner.CucumberTest.Validação de cenários negativos de carrinho - Validar que o cadastro de carrinho com quantidade negativa é rejeitado -- Time elapsed: 0.006 s <<< ERROR!
+java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+	at io.github.acarolinebcosta.serverest.product.ProductSteps.prepareMainProduct(ProductSteps.java:48)
+	at io.github.acarolinebcosta.serverest.product.ProductSteps.availableProductExists(ProductSteps.java:24)
+	at ✽.que existe um usuário administrador autenticado com produto disponível(classpath:features/carrinhos_negativos.feature:6)
+
+[ERROR] io.github.acarolinebcosta.serverest.runner.CucumberTest.Validação de cenários negativos de carrinho - Validar que o cadastro de carrinho com produto de ID vazio é rejeitado -- Time elapsed: 0.006 s <<< ERROR!
+java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+	at io.github.acarolinebcosta.serverest.product.ProductSteps.prepareMainProduct(ProductSteps.java:48)
+	at io.github.acarolinebcosta.serverest.product.ProductSteps.availableProductExists(ProductSteps.java:24)
+	at ✽.que existe um usuário administrador autenticado com produto disponível(classpath:features/carrinhos_negativos.feature:6)
+
+[ERROR] io.github.acarolinebcosta.serverest.runner.CucumberTest.Cancelamento de compra - Validar que o cancelamento de uma compra restaure o estoque -- Time elapsed: 0.006 s <<< ERROR!
+java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+	at io.github.acarolinebcosta.serverest.product.ProductSteps.prepareMainProduct(ProductSteps.java:48)
+	at io.github.acarolinebcosta.serverest.product.ProductSteps.availableProductExists(ProductSteps.java:24)
+	at ✽.que existe um usuário administrador autenticado com produto disponível(classpath:features/fluxo_cancelamento.feature:11)
+
+[ERROR] io.github.acarolinebcosta.serverest.runner.CucumberTest.Conclusão de compra - Validar que a conclusão de uma compra mantenha o estoque consumido -- Time elapsed: 0.006 s <<< ERROR!
+java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+	at io.github.acarolinebcosta.serverest.product.ProductSteps.prepareMainProduct(ProductSteps.java:48)
+	at io.github.acarolinebcosta.serverest.product.ProductSteps.availableProductExists(ProductSteps.java:24)
+	at ✽.que existe um usuário administrador autenticado com produto disponível(classpath:features/fluxo_compra.feature:11)
+
+[ERROR] io.github.acarolinebcosta.serverest.runner.CucumberTest.Validação de integridade entre recursos - Validar que a exclusão de produto em carrinho ativo é rejeitada -- Time elapsed: 0.006 s <<< ERROR!
+java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+	at io.github.acarolinebcosta.serverest.product.ProductSteps.prepareMainProduct(ProductSteps.java:48)
+	at io.github.acarolinebcosta.serverest.product.ProductSteps.availableProductExists(ProductSteps.java:24)
+	at ✽.que existe um usuário administrador autenticado com produto disponível(classpath:features/integridade.feature:7)
+
+[ERROR] io.github.acarolinebcosta.serverest.runner.CucumberTest.Validação de integridade entre recursos - Validar que a exclusão de usuário com carrinho ativo é rejeitada -- Time elapsed: 0.006 s <<< ERROR!
+java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+	at io.github.acarolinebcosta.serverest.product.ProductSteps.prepareMainProduct(ProductSteps.java:48)
+	at io.github.acarolinebcosta.serverest.product.ProductSteps.availableProductExists(ProductSteps.java:24)
+	at ✽.que existe um usuário administrador autenticado com produto disponível(classpath:features/integridade.feature:15)
+
+[ERROR] io.github.acarolinebcosta.serverest.runner.CucumberTest.Limites de estoque - Validar que a criação do carrinho respeite o limite de estoque disponível - Exemplos - Example #1.1 -- Time elapsed: 0.008 s <<< ERROR!
+java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+	at io.github.acarolinebcosta.serverest.product.ProductSteps.prepareMainProduct(ProductSteps.java:48)
+	at io.github.acarolinebcosta.serverest.product.ProductSteps.productWithStockExists(ProductSteps.java:34)
+	at ✽.que existe um produto com estoque 5(classpath:features/limites_estoque.feature:11)
+
+[ERROR] io.github.acarolinebcosta.serverest.runner.CucumberTest.Limites de estoque - Validar que a criação do carrinho respeite o limite de estoque disponível - Exemplos - Example #1.2 -- Time elapsed: 0.006 s <<< ERROR!
+java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+	at io.github.acarolinebcosta.serverest.product.ProductSteps.prepareMainProduct(ProductSteps.java:48)
+	at io.github.acarolinebcosta.serverest.product.ProductSteps.productWithStockExists(ProductSteps.java:34)
+	at ✽.que existe um produto com estoque 5(classpath:features/limites_estoque.feature:11)
+
+[ERROR] io.github.acarolinebcosta.serverest.runner.CucumberTest.Limites de estoque - Validar que a criação do carrinho respeite o limite de estoque disponível - Exemplos - Example #1.3 -- Time elapsed: 0.005 s <<< ERROR!
+java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+	at io.github.acarolinebcosta.serverest.product.ProductSteps.prepareMainProduct(ProductSteps.java:48)
+	at io.github.acarolinebcosta.serverest.product.ProductSteps.productWithStockExists(ProductSteps.java:34)
+	at ✽.que existe um produto com estoque 5(classpath:features/limites_estoque.feature:11)
+
+[ERROR] io.github.acarolinebcosta.serverest.runner.CucumberTest.Carrinho com múltiplos produtos - Validar que um carrinho com múltiplos produtos calcule os totais e restaure os estoques -- Time elapsed: 0.005 s <<< ERROR!
+java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+	at io.github.acarolinebcosta.serverest.product.ProductSteps.prepareTwoProducts(ProductSteps.java:58)
+	at io.github.acarolinebcosta.serverest.product.ProductSteps.multipleProductsAreAvailable(ProductSteps.java:39)
+	at ✽.que existem produtos disponíveis para compra(classpath:features/multiplos_produtos.feature:11)
+
+[ERROR] io.github.acarolinebcosta.serverest.runner.CucumberTest.Carrinho com múltiplos produtos - Validar que uma solicitação com estoque insuficiente seja rejeitada sem alterar os estoques -- Time elapsed: 0.009 s <<< ERROR!
+java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+	at io.github.acarolinebcosta.serverest.product.ProductSteps.prepareTwoProducts(ProductSteps.java:58)
+	at io.github.acarolinebcosta.serverest.product.ProductSteps.productsWithDifferentStocksExist(ProductSteps.java:44)
+	at ✽.que existem produtos com estoques distintos para compra(classpath:features/multiplos_produtos.feature:17)
+
+[ERROR] io.github.acarolinebcosta.serverest.runner.CucumberTest.Validação de cenários negativos de produto - Validar que o cadastro de produto sem o campo nome é rejeitado -- Time elapsed: 0.006 s <<< ERROR!
+java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+	at io.github.acarolinebcosta.serverest.user.UserSteps.authenticatedAdminExists(UserSteps.java:38)
+	at ✽.que existe um usuário administrador autenticado(classpath:features/produtos_negativos.feature:6)
+
+[ERROR] io.github.acarolinebcosta.serverest.runner.CucumberTest.Validação de cenários negativos de produto - Validar que o cadastro de produto sem o campo preço é rejeitado -- Time elapsed: 0.005 s <<< ERROR!
+java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+	at io.github.acarolinebcosta.serverest.user.UserSteps.authenticatedAdminExists(UserSteps.java:38)
+	at ✽.que existe um usuário administrador autenticado(classpath:features/produtos_negativos.feature:6)
+
+[ERROR] io.github.acarolinebcosta.serverest.runner.CucumberTest.Validação de cenários negativos de produto - Validar que o cadastro de produto sem o campo descrição é rejeitado -- Time elapsed: 0.006 s <<< ERROR!
+java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+	at io.github.acarolinebcosta.serverest.user.UserSteps.authenticatedAdminExists(UserSteps.java:38)
+	at ✽.que existe um usuário administrador autenticado(classpath:features/produtos_negativos.feature:6)
+
+[ERROR] io.github.acarolinebcosta.serverest.runner.CucumberTest.Validação de cenários negativos de produto - Validar que o cadastro de produto sem o campo quantidade é rejeitado -- Time elapsed: 0.005 s <<< ERROR!
+java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+	at io.github.acarolinebcosta.serverest.user.UserSteps.authenticatedAdminExists(UserSteps.java:38)
+	at ✽.que existe um usuário administrador autenticado(classpath:features/produtos_negativos.feature:6)
+
+[ERROR] io.github.acarolinebcosta.serverest.runner.CucumberTest.Validação de cenários negativos de produto - Validar que o cadastro de produto com preço negativo é rejeitado -- Time elapsed: 0.006 s <<< ERROR!
+java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+	at io.github.acarolinebcosta.serverest.user.UserSteps.authenticatedAdminExists(UserSteps.java:38)
+	at ✽.que existe um usuário administrador autenticado(classpath:features/produtos_negativos.feature:6)
+
+[ERROR] io.github.acarolinebcosta.serverest.runner.CucumberTest.Validação de cenários negativos de produto - Validar que o cadastro de produto com quantidade negativa é rejeitado -- Time elapsed: 0.010 s <<< ERROR!
+java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+	at io.github.acarolinebcosta.serverest.user.UserSteps.authenticatedAdminExists(UserSteps.java:38)
+	at ✽.que existe um usuário administrador autenticado(classpath:features/produtos_negativos.feature:6)
+
+[ERROR] io.github.acarolinebcosta.serverest.runner.CucumberTest.Validação de cenários negativos de produto - Validar que o cadastro de produto com nome duplicado é rejeitado -- Time elapsed: 0.005 s <<< ERROR!
+java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+	at io.github.acarolinebcosta.serverest.user.UserSteps.authenticatedAdminExists(UserSteps.java:38)
+	at ✽.que existe um usuário administrador autenticado(classpath:features/produtos_negativos.feature:6)
+
+[ERROR] io.github.acarolinebcosta.serverest.runner.CucumberTest.Validação de cenários negativos de produto - Validar que a busca de produto com ID inexistente é rejeitada -- Time elapsed: 0.006 s <<< ERROR!
+java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+	at io.github.acarolinebcosta.serverest.user.UserSteps.authenticatedAdminExists(UserSteps.java:38)
+	at ✽.que existe um usuário administrador autenticado(classpath:features/produtos_negativos.feature:6)
+
+[ERROR] io.github.acarolinebcosta.serverest.runner.CucumberTest.Regras de criação do carrinho - Validar que um segundo carrinho para o mesmo usuário seja rejeitado -- Time elapsed: 0.007 s <<< ERROR!
+java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+	at io.github.acarolinebcosta.serverest.cart.CartSteps.userAlreadyHasCart(CartSteps.java:36)
+	at ✽.que o usuário já possui um carrinho(classpath:features/regras_carrinho.feature:11)
+
+[ERROR] io.github.acarolinebcosta.serverest.runner.CucumberTest.Regras de criação do carrinho - Validar que um carrinho com produto inexistente seja rejeitado -- Time elapsed: 0.004 s <<< ERROR!
+java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+	at io.github.acarolinebcosta.serverest.user.UserSteps.authenticatedAdminExists(UserSteps.java:38)
+	at ✽.que existe um usuário administrador autenticado(classpath:features/regras_carrinho.feature:17)
+
+[ERROR] io.github.acarolinebcosta.serverest.runner.CucumberTest.Regras de criação do carrinho - Validar que uma quantidade superior ao estoque seja rejeitada sem alterar o estoque -- Time elapsed: 0.008 s <<< ERROR!
+java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+	at io.github.acarolinebcosta.serverest.product.ProductSteps.prepareMainProduct(ProductSteps.java:48)
+	at io.github.acarolinebcosta.serverest.product.ProductSteps.limitedStockProductExists(ProductSteps.java:29)
+	at ✽.que existe um produto com estoque limitado(classpath:features/regras_carrinho.feature:23)
+
+[ERROR] io.github.acarolinebcosta.serverest.runner.CucumberTest.Regras de criação do carrinho - Validar que produtos duplicados no mesmo carrinho sejam rejeitados sem alterar o estoque -- Time elapsed: 0.004 s <<< ERROR!
+java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAuthenticatedAdmin(UserService.java:161)
+	at io.github.acarolinebcosta.serverest.product.ProductSteps.prepareMainProduct(ProductSteps.java:48)
+	at io.github.acarolinebcosta.serverest.product.ProductSteps.availableProductExists(ProductSteps.java:24)
+	at ✽.que existe um produto disponível(classpath:features/regras_carrinho.feature:29)
+
+[ERROR] io.github.acarolinebcosta.serverest.runner.CucumberTest.Validação de cenários negativos de usuário - Validar que o cadastro de usuário com e-mail já utilizado é rejeitado -- Time elapsed: 0.007 s <<< ERROR!
+java.lang.IllegalStateException: A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+	at io.github.acarolinebcosta.serverest.config.EnvironmentConfig.testPassword(EnvironmentConfig.java:14)
+	at io.github.acarolinebcosta.serverest.user.UserData.validAdmin(UserData.java:12)
+	at io.github.acarolinebcosta.serverest.user.UserService.prepareAdmin(UserService.java:35)
+	at io.github.acarolinebcosta.serverest.user.UserService.createAdmin(UserService.java:108)
+	at io.github.acarolinebcosta.serverest.user.UserNegativeSteps.userWithKnownEmailExists(UserNegativeSteps.java:20)
+	at ✽.que existe um usuário cadastrado com e-mail conhecido(classpath:features/usuarios_negativos.feature:7)
+
+[INFO] 
+[INFO] Results:
+[INFO] 
+[ERROR] Errors: 
+[ERROR]   CucumberTest.Cadastro de usuário - Validar que um usuário administrador seja criado e persistido com sucesso » IllegalState A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+[ERROR]   CucumberTest.Cancelamento de compra - Validar que o cancelamento de uma compra restaure o estoque » IllegalState A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+[ERROR]   CucumberTest.Carrinho com múltiplos produtos - Validar que um carrinho com múltiplos produtos calcule os totais e restaure os estoques » IllegalState A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+[ERROR]   CucumberTest.Carrinho com múltiplos produtos - Validar que uma solicitação com estoque insuficiente seja rejeitada sem alterar os estoques » IllegalState A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+[ERROR]   CucumberTest.Conclusão de compra - Validar que a conclusão de uma compra mantenha o estoque consumido » IllegalState A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+[ERROR]   CucumberTest.Limites de estoque - Validar que a criação do carrinho respeite o limite de estoque disponível - Exemplos - Example #1.1 » IllegalState A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+[ERROR]   CucumberTest.Limites de estoque - Validar que a criação do carrinho respeite o limite de estoque disponível - Exemplos - Example #1.2 » IllegalState A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+[ERROR]   CucumberTest.Limites de estoque - Validar que a criação do carrinho respeite o limite de estoque disponível - Exemplos - Example #1.3 » IllegalState A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+[ERROR]   CucumberTest.Regras de criação do carrinho - Validar que produtos duplicados no mesmo carrinho sejam rejeitados sem alterar o estoque » IllegalState A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+[ERROR]   CucumberTest.Regras de criação do carrinho - Validar que um carrinho com produto inexistente seja rejeitado » IllegalState A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+[ERROR]   CucumberTest.Regras de criação do carrinho - Validar que um segundo carrinho para o mesmo usuário seja rejeitado » IllegalState A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+[ERROR]   CucumberTest.Regras de criação do carrinho - Validar que uma quantidade superior ao estoque seja rejeitada sem alterar o estoque » IllegalState A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+[ERROR]   CucumberTest.Validação de atualização de usuários via PUT - Validar que a atualização de um usuário existente é aprovada » IllegalState A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+[ERROR]   CucumberTest.Validação de atualização de usuários via PUT - Validar que a atualização de um usuário inexistente cria um novo registro » IllegalState A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+[ERROR]   CucumberTest.Validação de atualização de usuários via PUT - Validar que a atualização de usuário sem o campo nome é rejeitada » IllegalState A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+[ERROR]   CucumberTest.Validação de cenários negativos de autenticação - Validar que o login com senha incorreta é rejeitado » IllegalState A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+[ERROR]   CucumberTest.Validação de cenários negativos de carrinho - Validar que o cadastro de carrinho com produto de ID vazio é rejeitado » IllegalState A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+[ERROR]   CucumberTest.Validação de cenários negativos de carrinho - Validar que o cadastro de carrinho com quantidade negativa é rejeitado » IllegalState A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+[ERROR]   CucumberTest.Validação de cenários negativos de carrinho - Validar que o cadastro de carrinho com quantidade zero é rejeitado » IllegalState A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+[ERROR]   CucumberTest.Validação de cenários negativos de carrinho - Validar que o cadastro de carrinho sem produtos é rejeitado » IllegalState A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+[ERROR]   CucumberTest.Validação de cenários negativos de produto - Validar que a busca de produto com ID inexistente é rejeitada » IllegalState A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+[ERROR]   CucumberTest.Validação de cenários negativos de produto - Validar que o cadastro de produto com nome duplicado é rejeitado » IllegalState A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+[ERROR]   CucumberTest.Validação de cenários negativos de produto - Validar que o cadastro de produto com preço negativo é rejeitado » IllegalState A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+[ERROR]   CucumberTest.Validação de cenários negativos de produto - Validar que o cadastro de produto com quantidade negativa é rejeitado » IllegalState A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+[ERROR]   CucumberTest.Validação de cenários negativos de produto - Validar que o cadastro de produto sem o campo descrição é rejeitado » IllegalState A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+[ERROR]   CucumberTest.Validação de cenários negativos de produto - Validar que o cadastro de produto sem o campo nome é rejeitado » IllegalState A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+[ERROR]   CucumberTest.Validação de cenários negativos de produto - Validar que o cadastro de produto sem o campo preço é rejeitado » IllegalState A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+[ERROR]   CucumberTest.Validação de cenários negativos de produto - Validar que o cadastro de produto sem o campo quantidade é rejeitado » IllegalState A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+[ERROR]   CucumberTest.Validação de cenários negativos de usuário - Validar que o cadastro de usuário com e-mail já utilizado é rejeitado » IllegalState A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+[ERROR]   CucumberTest.Validação de integridade entre recursos - Validar que a exclusão de produto em carrinho ativo é rejeitada » IllegalState A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+[ERROR]   CucumberTest.Validação de integridade entre recursos - Validar que a exclusão de usuário com carrinho ativo é rejeitada » IllegalState A variável de ambiente SERVEREST_TEST_PASSWORD é obrigatória
+[INFO] 
+[ERROR] Tests run: 53, Failures: 0, Errors: 31, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[ERROR] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  22.566 s
+[INFO] Finished at: 2026-10-04T14:52:29-03:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.5.6:test (default-test) on project automacao-api-serverest: 
+[ERROR] 
+[ERROR] See /Users/anacosta/Downloads/automacao-api-serverest/target/surefire-reports for the individual test results.
+[ERROR] See dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

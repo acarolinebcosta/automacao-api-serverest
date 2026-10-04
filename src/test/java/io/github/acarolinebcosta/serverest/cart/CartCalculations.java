@@ -18,7 +18,7 @@ public final class CartCalculations {
                     CreatedProduct product = requireProduct(products, item.productId());
 
                     return Math.multiplyExact(
-                            product.request().price().longValue(),
+                            (long) product.request().price(),
                             item.quantity().longValue()
                     );
                 })

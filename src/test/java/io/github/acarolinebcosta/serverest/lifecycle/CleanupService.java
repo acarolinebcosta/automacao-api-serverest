@@ -32,27 +32,29 @@ public final class CleanupService {
         List<Throwable> failures = new ArrayList<>();
 
         if (context.getToken() != null) {
-            attempt(failures, () -> {
-                Response response =
-                        cartClient.cancelPurchase(context.getToken());
+            if (context.getCartId() != null) {
+                attempt(failures, () -> {
+                    Response response =
+                            cartClient.cancelPurchase(context.getToken());
 
-                ResponseAssertions.assertStatus(
-                        response,
-                        200,
-                        "Limpar carrinho"
-                );
+                    ResponseAssertions.assertStatus(
+                            response,
+                            200,
+                            "Limpar carrinho"
+                    );
 
-                assertThat(response.as(MessageResponse.class).message())
-                        .withFailMessage(
-                                "Mensagem inesperada na limpeza do carrinho; ver evidência HTTP sanitizada"
-                        )
-                        .isIn(
-                                ApiMessages.CANCEL_SUCCESS,
-                                ApiMessages.CART_NOT_FOUND
-                        );
+                    assertThat(response.as(MessageResponse.class).message())
+                            .withFailMessage(
+                                    "Mensagem inesperada na limpeza do carrinho; ver evidência HTTP sanitizada"
+                            )
+                            .isIn(
+                                    ApiMessages.CANCEL_SUCCESS,
+                                    ApiMessages.CART_NOT_FOUND
+                            );
 
-                cleanupAssertions.assertCartAbsent();
-            });
+                    cleanupAssertions.assertCartAbsent();
+                });
+            }
 
             for (CreatedProduct product : context.getProducts()) {
                 attempt(failures, () -> deleteAndVerify(

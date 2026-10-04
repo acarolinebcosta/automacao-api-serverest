@@ -1,0 +1,214 @@
+[INFO] Scanning for projects...
+[INFO] Loaded 23983 auto-discovered prefixes for remote repository central (prefixes-central.txt)
+[INFO] 
+[INFO] ---------< io.github.acarolinebcosta:automacao-api-serverest >----------
+[INFO] Building ServeRest API Quality Automation 1.0.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.5.0:clean (default-clean) @ automacao-api-serverest ---
+[INFO] Deleting /Users/anacosta/Downloads/automacao-api-serverest/target
+[INFO] 
+[INFO] --- resources:3.5.0:resources (default-resources) @ automacao-api-serverest ---
+[INFO] skip non existing resourceDirectory /Users/anacosta/Downloads/automacao-api-serverest/src/main/resources
+[INFO] 
+[INFO] --- compiler:3.15.0:compile (default-compile) @ automacao-api-serverest ---
+[INFO] Loaded 74 auto-discovered prefixes for remote repository apache.snapshots (prefixes-apache.snapshots.txt)
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- resources:3.5.0:testResources (default-testResources) @ automacao-api-serverest ---
+[INFO] Copying 19 resources from src/test/resources to target/test-classes
+[INFO] 
+[INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ automacao-api-serverest ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 60 source files with javac [debug release 21] to target/test-classes
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by lombok.permit.Permit
+WARNING: Please consider reporting this to the maintainers of class lombok.permit.Permit
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+[INFO] 
+[INFO] --- surefire:3.5.6:test (default-test) @ automacao-api-serverest ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+java.lang.RuntimeException: The aspect weaver cannot determine any valid method to define auxiliary classes in arbitrary class loaders. Aspect weaving will *not* work, and you will see subsequent errors. Please search for corresponding issues at https://github.com/eclipse-aspectj/aspectj/issues. If there are none, please create a new one.
+	at org.aspectj.weaver.loadtime.ClassLoaderWeavingAdaptor.<clinit>(ClassLoaderWeavingAdaptor.java:1043)
+	at org.aspectj.weaver.loadtime.Aj.<clinit>(Aj.java:267)
+	at org.aspectj.weaver.loadtime.ClassPreProcessorAgentAdapter.<clinit>(ClassPreProcessorAgentAdapter.java:27)
+	at org.aspectj.weaver.loadtime.Agent.<clinit>(Agent.java:34)
+	at java.base/jdk.internal.misc.Unsafe.ensureClassInitialized0(Native Method)
+	at java.base/jdk.internal.misc.Unsafe.ensureClassInitialized(Unsafe.java:1195)
+	at java.base/jdk.internal.reflect.MethodHandleAccessorFactory.ensureClassInitialized(MethodHandleAccessorFactory.java:341)
+	at java.base/jdk.internal.reflect.MethodHandleAccessorFactory.newMethodAccessor(MethodHandleAccessorFactory.java:72)
+	at java.base/jdk.internal.reflect.ReflectionFactory.newMethodAccessor(ReflectionFactory.java:119)
+	at java.base/java.lang.reflect.Method.acquireMethodAccessor(Method.java:729)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.instrument/sun.instrument.InstrumentationImpl.loadClassAndStartAgent(InstrumentationImpl.java:544)
+	at java.instrument/sun.instrument.InstrumentationImpl.loadClassAndCallPremain(InstrumentationImpl.java:556)
+Caused by: java.lang.IllegalArgumentException: Unsupported class file major version 71
+	at aj.org.objectweb.asm.ClassReader.<init>(ClassReader.java:200)
+	at aj.org.objectweb.asm.ClassReader.<init>(ClassReader.java:180)
+	at aj.org.objectweb.asm.ClassReader.<init>(ClassReader.java:166)
+	at aj.org.objectweb.asm.ClassReader.<init>(ClassReader.java:288)
+	at org.aspectj.weaver.loadtime.ClassLoaderWeavingAdaptor.getMirrorClassBytes(ClassLoaderWeavingAdaptor.java:1180)
+	at org.aspectj.weaver.loadtime.ClassLoaderWeavingAdaptor.getMirrorClass(ClassLoaderWeavingAdaptor.java:1166)
+	at org.aspectj.weaver.loadtime.ClassLoaderWeavingAdaptor.getAccessibleObjectOverrideOffset(ClassLoaderWeavingAdaptor.java:1128)
+	at org.aspectj.weaver.loadtime.ClassLoaderWeavingAdaptor.createDefineClassMethodHandle(ClassLoaderWeavingAdaptor.java:1100)
+	at org.aspectj.weaver.loadtime.ClassLoaderWeavingAdaptor.<clinit>(ClassLoaderWeavingAdaptor.java:1040)
+	... 12 more
+[INFO] Running io.github.acarolinebcosta.serverest.runner.CucumberTest
+SLF4J(W): No SLF4J providers were found.
+SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
+
+@put @CT-PUT-01
+Cenário: Validar que a atualização de um usuário existente é aprovada # classpath:features/atualizacao.feature:6
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper (file:/Users/anacosta/.m2/repository/com/google/guava/guava/33.2.1-jre/guava-33.2.1-jre.jar)
+WARNING: Please consider reporting this to the maintainers of class com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+  ✔ Dado que existe um usuário administrador autenticado              # io.github.acarolinebcosta.serverest.user.UserSteps.authenticatedAdminExists()
+  ✔ Quando atualizo o usuário com dados válidos                       # io.github.acarolinebcosta.serverest.user.UpdateSteps.updateUserWithValidData()
+  ✔ Então a atualização deve ser aprovada com status 200              # io.github.acarolinebcosta.serverest.user.UpdateSteps.updateShouldBeApproved()
+  ✔ E a mensagem de atualização com sucesso deve ser retornada        # io.github.acarolinebcosta.serverest.user.UpdateSteps.updateSuccessMessageShouldBeReturned()
+
+@put @CT-PUT-02
+Cenário: Validar que a atualização de um usuário inexistente cria um novo registro # classpath:features/atualizacao.feature:13
+  ✔ Dado que existe um usuário administrador autenticado                           # io.github.acarolinebcosta.serverest.user.UserSteps.authenticatedAdminExists()
+  ✔ Quando atualizo um usuário com ID inexistente e dados válidos                  # io.github.acarolinebcosta.serverest.user.UpdateSteps.updateUserWithNonexistentId()
+  ✘ Então a atualização deve criar um novo registro com status 201                 # io.github.acarolinebcosta.serverest.user.UpdateSteps.updateShouldCreateNew()
+        org.opentest4j.AssertionFailedError: [Criar usuário via PUT: status HTTP] 
+        expected: 201
+         but was: 400
+        	at io.github.acarolinebcosta.serverest.validation.ResponseAssertions.assertStatus(ResponseAssertions.java:18)
+        	at io.github.acarolinebcosta.serverest.user.UpdateSteps.updateShouldCreateNew(UpdateSteps.java:76)
+        	at ✽.a atualização deve criar um novo registro com status 201(classpath:features/atualizacao.feature:16)
+  ↷ E a mensagem de cadastro com sucesso deve ser retornada                        # io.github.acarolinebcosta.serverest.user.UpdateSteps.createSuccessMessageShouldBeReturned()
+
+@negativo @put @CT-PUT-03
+Cenário: Validar que a atualização de usuário sem o campo nome é rejeitada   # classpath:features/atualizacao.feature:20
+  ✔ Dado que existe um usuário administrador autenticado                     # io.github.acarolinebcosta.serverest.user.UserSteps.authenticatedAdminExists()
+  ✔ Quando atualizo o usuário sem o campo nome                               # io.github.acarolinebcosta.serverest.user.UpdateSteps.updateUserWithoutName()
+  ✔ Então a atualização deve ser rejeitada com status 400                    # io.github.acarolinebcosta.serverest.user.UpdateSteps.updateShouldBeRejectedWithStatus(int)
+  ✔ E a mensagem "nome é obrigatório" deve ser retornada para o campo "nome" # io.github.acarolinebcosta.serverest.CommonNegativeSteps.validationMessageShouldBeReturned(java.lang.String,java.lang.String)
+
+@put @CT-PUT-04
+Cenário: Validar que a atualização de usuário sem token é aprovada # classpath:features/atualizacao.feature:27
+  ✔ Dado que existe um usuário cadastrado com e-mail conhecido     # io.github.acarolinebcosta.serverest.user.UserNegativeSteps.userWithKnownEmailExists()
+  ✔ Quando atualizo um usuário sem token                           # io.github.acarolinebcosta.serverest.user.UpdateSteps.updateUserWithoutToken()
+  ✘ Então a atualização deve ser rejeitada com status 401          # io.github.acarolinebcosta.serverest.user.UpdateSteps.updateShouldBeRejectedWithStatus(int)
+        org.opentest4j.AssertionFailedError: [Rejeitar atualização: status HTTP] 
+        expected: 401
+         but was: 400
+        	at io.github.acarolinebcosta.serverest.validation.ResponseAssertions.assertStatus(ResponseAssertions.java:18)
+        	at io.github.acarolinebcosta.serverest.user.UpdateSteps.updateShouldBeRejectedWithStatus(UpdateSteps.java:85)
+        	at ✽.a atualização deve ser rejeitada com status 401(classpath:features/atualizacao.feature:30)
+  ↷ E a mensagem de token inválido deve ser retornada              # io.github.acarolinebcosta.serverest.auth.AuthNegativeSteps.invalidTokenMessageShouldBeReturned()
+
+@negativo @login @CT-NEG-LOGIN-01
+Cenário: Validar que o login com senha incorreta é rejeitado   # classpath:features/autenticacao_negativa.feature:6
+  ✔ Dado que existe um usuário cadastrado com e-mail conhecido # io.github.acarolinebcosta.serverest.user.UserNegativeSteps.userWithKnownEmailExists()
+  ✔ Quando tento autenticar com uma senha incorreta            # io.github.acarolinebcosta.serverest.auth.LoginNegativeSteps.attemptLoginWithInvalidPassword()
+  ✔ Então a autenticação deve ser rejeitada com status 401     # io.github.acarolinebcosta.serverest.auth.LoginNegativeSteps.authenticationShouldBeRejected()
+  ✔ E a mensagem de credenciais inválidas deve ser retornada   # io.github.acarolinebcosta.serverest.auth.LoginNegativeSteps.invalidCredentialsMessageShouldBeReturned()
+
+@negativo @login @CT-NEG-LOGIN-02
+Cenário: Validar que o login com e-mail não cadastrado é rejeitado # classpath:features/autenticacao_negativa.feature:13
+  ✔ Quando tento autenticar com um e-mail não cadastrado           # io.github.acarolinebcosta.serverest.auth.LoginNegativeSteps.attemptLoginWithUnknownEmail()
+  ✔ Então a autenticação deve ser rejeitada com status 401         # io.github.acarolinebcosta.serverest.auth.LoginNegativeSteps.authenticationShouldBeRejected()
+  ✔ E a mensagem de credenciais inválidas deve ser retornada       # io.github.acarolinebcosta.serverest.auth.LoginNegativeSteps.invalidCredentialsMessageShouldBeReturned()
+
+@negativo @login @CT-NEG-LOGIN-03
+Cenário: Validar que o login sem o campo e-mail é rejeitado # classpath:features/autenticacao_negativa.feature:19
+  ✔ Quando tento autenticar sem o campo e-mail              # io.github.acarolinebcosta.serverest.auth.LoginNegativeSteps.attemptLoginWithoutEmail()
+  ✔ Então a autenticação deve ser rejeitada com status 400  # io.github.acarolinebcosta.serverest.auth.LoginNegativeSteps.authenticationShouldBeRejectedWith400()
+
+@negativo @login @CT-NEG-LOGIN-04
+Cenário: Validar que o login sem o campo senha é rejeitado # classpath:features/autenticacao_negativa.feature:24
+  ✔ Quando tento autenticar sem o campo senha              # io.github.acarolinebcosta.serverest.auth.LoginNegativeSteps.attemptLoginWithoutPassword()
+  ✔ Então a autenticação deve ser rejeitada com status 400 # io.github.acarolinebcosta.serverest.auth.LoginNegativeSteps.authenticationShouldBeRejectedWith400()
+
+@negativo @autorizacao @CT-NEG-AUTH-01
+Cenário: Validar que a criação de produto sem token é rejeitada # classpath:features/autorizacao.feature:6
+  ✔ Quando tento criar um produto sem token                     # io.github.acarolinebcosta.serverest.auth.AuthNegativeSteps.attemptCreateProductWithoutToken()
+  ✔ Então a operação deve ser rejeitada com status 401          # io.github.acarolinebcosta.serverest.CommonNegativeSteps.operationShouldBeRejectedWithStatus(int)
+  ✔ E a mensagem de token inválido deve ser retornada           # io.github.acarolinebcosta.serverest.auth.AuthNegativeSteps.invalidTokenMessageShouldBeReturned()
+
+@negativo @autorizacao @CT-NEG-AUTH-02
+Cenário: Validar que a criação de produto com token inválido é rejeitada # classpath:features/autorizacao.feature:12
+  ✔ Quando tento criar um produto com token inválido                     # io.github.acarolinebcosta.serverest.auth.AuthNegativeSteps.attemptCreateProductWithInvalidToken()
+  ✔ Então a operação deve ser rejeitada com status 401                   # io.github.acarolinebcosta.serverest.CommonNegativeSteps.operationShouldBeRejectedWithStatus(int)
+  ✔ E a mensagem de token inválido deve ser retornada                    # io.github.acarolinebcosta.serverest.auth.AuthNegativeSteps.invalidTokenMessageShouldBeReturned()
+
+@negativo @autorizacao @CT-NEG-AUTH-03
+Cenário: Validar que a exclusão de produto sem token é rejeitada # classpath:features/autorizacao.feature:18
+  ✔ Quando tento excluir um produto sem token                    # io.github.acarolinebcosta.serverest.auth.AuthNegativeSteps.attemptDeleteProductWithoutToken()
+  ✔ Então a operação deve ser rejeitada com status 401           # io.github.acarolinebcosta.serverest.CommonNegativeSteps.operationShouldBeRejectedWithStatus(int)
+  ✔ E a mensagem de token inválido deve ser retornada            # io.github.acarolinebcosta.serverest.auth.AuthNegativeSteps.invalidTokenMessageShouldBeReturned()
+
+@negativo @autorizacao @CT-NEG-AUTH-04
+Cenário: Validar que a criação de carrinho sem token é rejeitada # classpath:features/autorizacao.feature:24
+  ✔ Quando tento criar um carrinho sem token                     # io.github.acarolinebcosta.serverest.auth.AuthNegativeSteps.attemptCreateCartWithoutToken()
+  ✔ Então a operação deve ser rejeitada com status 401           # io.github.acarolinebcosta.serverest.CommonNegativeSteps.operationShouldBeRejectedWithStatus(int)
+  ✔ E a mensagem de token inválido deve ser retornada            # io.github.acarolinebcosta.serverest.auth.AuthNegativeSteps.invalidTokenMessageShouldBeReturned()
+
+@negativo @autorizacao @CT-NEG-AUTH-05
+Cenário: Validar que a conclusão de compra sem token é rejeitada # classpath:features/autorizacao.feature:30
+  ✔ Quando tento concluir uma compra sem token                   # io.github.acarolinebcosta.serverest.auth.AuthNegativeSteps.attemptCompletePurchaseWithoutToken()
+  ✔ Então a operação deve ser rejeitada com status 401           # io.github.acarolinebcosta.serverest.CommonNegativeSteps.operationShouldBeRejectedWithStatus(int)
+  ✔ E a mensagem de token inválido deve ser retornada            # io.github.acarolinebcosta.serverest.auth.AuthNegativeSteps.invalidTokenMessageShouldBeReturned()
+
+@negativo @autorizacao @CT-NEG-AUTH-06
+Cenário: Validar que o cancelamento de compra sem token é rejeitado # classpath:features/autorizacao.feature:36
+  ✔ Quando tento cancelar uma compra sem token                      # io.github.acarolinebcosta.serverest.auth.AuthNegativeSteps.attemptCancelPurchaseWithoutToken()
+  ✔ Então a operação deve ser rejeitada com status 401              # io.github.acarolinebcosta.serverest.CommonNegativeSteps.operationShouldBeRejectedWithStatus(int)
+  ✔ E a mensagem de token inválido deve ser retornada               # io.github.acarolinebcosta.serverest.auth.AuthNegativeSteps.invalidTokenMessageShouldBeReturned()
+
+@usuario @cadastro @CT-USUARIO-01 @CT01
+Cenário: Validar que um usuário administrador seja criado e persistido com sucesso # classpath:features/cadastro_usuario.feature:10
+  ✔ Dado que possuo os dados de um novo usuário administrador                      # io.github.acarolinebcosta.serverest.user.UserSteps.administratorUserDataExists()
+  ✔ Quando realizo o cadastro do usuário                                           # io.github.acarolinebcosta.serverest.user.UserSteps.createAdministratorUser()
+  ✔ Então o usuário deve ser criado com sucesso                                    # io.github.acarolinebcosta.serverest.user.UserSteps.administratorUserShouldBeCreated()
+  ✔ E os dados do usuário devem estar persistidos                                  # io.github.acarolinebcosta.serverest.user.UserSteps.administratorUserShouldBePersisted()
+
+@negativo @carrinho @CT-NEG-CARRINHO-01
+Cenário: Validar que o cadastro de carrinho sem produtos é rejeitado                 # classpath:features/carrinhos_negativos.feature:9
+  ✔ Dado que existe um usuário administrador autenticado com produto disponível      # io.github.acarolinebcosta.serverest.product.ProductSteps.availableProductExists()
+  ✔ Quando tento cadastrar um carrinho sem produtos                                  # io.github.acarolinebcosta.serverest.cart.CartNegativeSteps.attemptCreateCartWithoutProducts()
+  ✔ Então a criação do carrinho deve ser rejeitada com status 400                    # io.github.acarolinebcosta.serverest.cart.CartNegativeSteps.cartCreationShouldBeRejected()
+  ✔ E a mensagem "produtos é obrigatório" deve ser retornada para o campo "produtos" # io.github.acarolinebcosta.serverest.CommonNegativeSteps.validationMessageShouldBeReturned(java.lang.String,java.lang.String)
+
+@negativo @carrinho @CT-NEG-CARRINHO-02
+Cenário: Validar que o cadastro de carrinho com quantidade zero é rejeitado                                                    # classpath:features/carrinhos_negativos.feature:15
+  ✔ Dado que existe um usuário administrador autenticado com produto disponível                                                # io.github.acarolinebcosta.serverest.product.ProductSteps.availableProductExists()
+  ✔ Quando tento cadastrar um carrinho com quantidade zero                                                                     # io.github.acarolinebcosta.serverest.cart.CartNegativeSteps.attemptCreateCartWithZeroQuantity()
+  ✔ Então a criação do carrinho deve ser rejeitada com status 400                                                              # io.github.acarolinebcosta.serverest.cart.CartNegativeSteps.cartCreationShouldBeRejected()
+  ✔ E a mensagem "produtos[0].quantidade deve ser um número positivo" deve ser retornada para o campo "produtos[0].quantidade" # io.github.acarolinebcosta.serverest.CommonNegativeSteps.validationMessageShouldBeReturned(java.lang.String,java.lang.String)
+
+@negativo @carrinho @CT-NEG-CARRINHO-03
+Cenário: Validar que o cadastro de carrinho com quantidade negativa é rejeitado                                                # classpath:features/carrinhos_negativos.feature:21
+  ✔ Dado que existe um usuário administrador autenticado com produto disponível                                                # io.github.acarolinebcosta.serverest.product.ProductSteps.availableProductExists()
+  ✔ Quando tento cadastrar um carrinho com quantidade negativa                                                                 # io.github.acarolinebcosta.serverest.cart.CartNegativeSteps.attemptCreateCartWithNegativeQuantity()
+  ✔ Então a criação do carrinho deve ser rejeitada com status 400                                                              # io.github.acarolinebcosta.serverest.cart.CartNegativeSteps.cartCreationShouldBeRejected()
+  ✔ E a mensagem "produtos[0].quantidade deve ser um número positivo" deve ser retornada para o campo "produtos[0].quantidade" # io.github.acarolinebcosta.serverest.CommonNegativeSteps.validationMessageShouldBeReturned(java.lang.String,java.lang.String)
+
+@negativo @carrinho @CT-NEG-CARRINHO-04
+Cenário: Validar que o cadastro de carrinho com produto de ID vazio é rejeitado                                           # classpath:features/carrinhos_negativos.feature:27
+  ✔ Dado que existe um usuário administrador autenticado com produto disponível                                           # io.github.acarolinebcosta.serverest.product.ProductSteps.availableProductExists()
+  ✔ Quando tento cadastrar um carrinho com produto de ID vazio                                                            # io.github.acarolinebcosta.serverest.cart.CartNegativeSteps.attemptCreateCartWithEmptyProductId()
+  ✔ Então a criação do carrinho deve ser rejeitada com status 400                                                         # io.github.acarolinebcosta.serverest.cart.CartNegativeSteps.cartCreationShouldBeRejected()
+  ✔ E a mensagem "produtos[0].idProduto não pode ficar em branco" deve ser retornada para o campo "produtos[0].idProduto" # io.github.acarolinebcosta.serverest.CommonNegativeSteps.validationMessageShouldBeReturned(java.lang.String,java.lang.String)
+
+@fluxo-principal @cancelamento @estoque @CT-E2E-02 @CT01 @CT02 @CT03 @CT04 @CT05 @CT06 @CT07 @CT08 @CT12 @CT13 @CT14 @CT15
+Cenário: Validar que o cancelamento de uma compra restaure o estoque            # classpath:features/fluxo_cancelamento.feature:10
+  ✔ Dado que existe um usuário administrador autenticado com produto disponível # io.github.acarolinebcosta.serverest.product.ProductSteps.availableProductExists()
+  ✔ Quando ele cria e cancela uma compra                                        # io.github.acarolinebcosta.serverest.cart.PurchaseSteps.cancelPurchase()
+  ✔ Então o carrinho deve ser removido e o estoque restaurado                   # io.github.acarolinebcosta.serverest.cart.PurchaseSteps.cancellationShouldRemoveCartAndRestoreStock()
+
+@fluxo-principal @compra @estoque @CT-E2E-01 @conclusao @CT01 @CT02 @CT03 @CT04 @CT05 @CT06 @CT07 @CT08 @CT09 @CT10 @CT11
+Cenário: Validar que a conclusão de uma compra mantenha o estoque consumido     # classpath:features/fluxo_compra.feature:10
+  ✔ Dado que existe um usuário administrador autenticado com produto disponível # io.github.acarolinebcosta.serverest.product.ProductSteps.availableProductExists()
+  ✔ Quando ele realiza uma compra                                               # io.github.acarolinebcosta.serverest.cart.PurchaseSteps.completePurchase()
+  ✔ Então a compra deve ser concluída mantendo o estoque consumido              # io.github.acarolinebcosta.serverest.cart.PurchaseSteps.purchaseShouldKeepConsumedStock()

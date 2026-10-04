@@ -7,6 +7,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public record CartItemResponse(
         @JsonProperty("idProduto") String productId,
         @JsonProperty("quantidade") Integer quantity,
-        @JsonProperty("precoUnitario") Integer unitPrice
+        @JsonProperty("precoUnitario") Long unitPrice
 ) {
 }

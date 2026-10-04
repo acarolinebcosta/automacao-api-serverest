@@ -35,17 +35,12 @@ public final class LoginNegativeSteps {
         context.setLastResponse(loginService.loginWithoutField("password"));
     }
 
-    @Entao("a autenticação deve ser rejeitada com status 401")
-    public void authenticationShouldBeRejected() {
+    @Entao("a autenticação deve ser rejeitada com status {int}")
+    public void authenticationShouldBeRejectedWithStatus(int expectedStatus) {
         ResponseAssertions.assertStatus(
-                context.getLastResponse(), 401, "Rejeitar autenticação"
-        );
-    }
-
-    @Entao("a autenticação deve ser rejeitada com status 400")
-    public void authenticationShouldBeRejectedWith400() {
-        ResponseAssertions.assertStatus(
-                context.getLastResponse(), 400, "Rejeitar autenticação"
+                context.getLastResponse(),
+                expectedStatus,
+                "Rejeitar autenticação"
         );
     }
 

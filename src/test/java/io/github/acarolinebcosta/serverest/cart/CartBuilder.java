@@ -13,6 +13,6 @@ public final class CartBuilder {
     }
 
     public CartRequest build() {
-        return new CartRequest(products);
+        return new CartRequest(List.copyOf(products));
     }
 }

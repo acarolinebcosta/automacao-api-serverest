@@ -53,6 +53,21 @@ public final class ApiMessages {
     public static final String INVALID_ID_FORMAT =
             "id deve ter exatamente 16 caracteres alfanuméricos";
 
+    public static final String INVALID_TOKEN =
+            "Token de acesso ausente, inválido, expirado ou usuário do token não existe mais";
+
+    public static final String PRODUCT_IN_USE =
+            "Não é permitido excluir produto que faz parte de carrinho";
+
+    public static final String USER_WITH_CART =
+            "Não é permitido excluir usuário com carrinho cadastrado";
+
+    public static final String UPDATE_SUCCESS =
+            "Registro alterado com sucesso";
+
+    public static final String BLANK_FIELD =
+            "não pode ficar em branco";
+
     private ApiMessages() {
         throw new UnsupportedOperationException("Utility class");
     }

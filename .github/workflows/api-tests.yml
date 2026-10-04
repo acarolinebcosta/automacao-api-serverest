@@ -18,7 +18,7 @@ jobs:
   api-tests:
     name: Execute API automated tests
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
 
     env:
       SERVEREST_TEST_PASSWORD: ${{ secrets.SERVEREST_TEST_PASSWORD }}

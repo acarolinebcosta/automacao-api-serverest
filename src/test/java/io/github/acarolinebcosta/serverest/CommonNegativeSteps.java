@@ -11,11 +11,15 @@ public final class CommonNegativeSteps {
 
     private final ScenarioContext context;
 
-    @Entao("a operação deve ser rejeitada com status 400")
-    public void operationShouldBeRejected() {
+    @Entao("a operação deve ser rejeitada com status {int}")
+    public void operationShouldBeRejectedWithStatus(int expectedStatus) {
         Response response = context.getLastResponse();
 
-        ResponseAssertions.assertStatus(response, 400, "Rejeitar operação");
+        ResponseAssertions.assertStatus(
+                response,
+                expectedStatus,
+                "Rejeitar operação"
+        );
     }
 
     @Entao("a mensagem {string} deve ser retornada")

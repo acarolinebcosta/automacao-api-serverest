@@ -8,7 +8,7 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record CartResponse(
         @JsonProperty("produtos") List<CartItemResponse> products,
-        @JsonProperty("precoTotal") Integer totalPrice,
+        @JsonProperty("precoTotal") Long totalPrice,
         @JsonProperty("quantidadeTotal") Integer totalQuantity,
         @JsonProperty("idUsuario") String userId,
         @JsonProperty("_id") String id

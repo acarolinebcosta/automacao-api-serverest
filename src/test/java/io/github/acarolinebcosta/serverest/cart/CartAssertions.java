@@ -110,9 +110,14 @@ public final class CartAssertions {
             CartItemResponse actualItem = cart.products().stream()
                     .filter(item -> item.productId().equals(expectedItem.productId()))
                     .findFirst()
-                    .orElseThrow();
+                    .orElseThrow(() -> new IllegalStateException(
+                            "Produto não encontrado no carrinho: "
+                                    + expectedItem.productId()
+                    ));
 
-            CreatedProduct product = context.requireProduct(expectedItem.productId());
+            CreatedProduct product = context.requireProduct(
+                    expectedItem.productId()
+            );
 
             assertThat(actualItem.quantity())
                     .as("Quantidade do produto %s", expectedItem.productId())
@@ -120,19 +125,24 @@ public final class CartAssertions {
 
             assertThat(actualItem.unitPrice())
                     .as("Preço unitário do produto %s", expectedItem.productId())
-                    .isEqualTo(product.request().price());
+                    .isEqualTo(product.request().price().longValue());
         }
     }
 
     @Step("Validar totais do carrinho")
     public void assertTotals(CartResponse cart, CartRequest expectedRequest) {
         int expectedQuantity = CartCalculations.totalQuantity(expectedRequest);
-        long expectedPrice = CartCalculations.totalPrice(expectedRequest, context.getProducts());
+        long expectedPrice = CartCalculations.totalPrice(
+                expectedRequest,
+                context.getProducts()
+        );
 
         Allure.addAttachment(
                 "Totais esperados do carrinho",
                 "application/json",
-                evidenceSanitizer.sanitize(new ExpectedTotals(expectedQuantity, expectedPrice)),
+                evidenceSanitizer.sanitize(
+                        new ExpectedTotals(expectedQuantity, expectedPrice)
+                ),
                 ".json"
         );
 
@@ -152,13 +162,19 @@ public final class CartAssertions {
     @Step("Validar ausência do carrinho por usuário e ID criado")
     public void assertCartAbsent() {
         assertEmptyCartList(
-                fetchCartList(cartService.findByUser(), "Buscar carrinhos por usuário"),
+                fetchCartList(
+                        cartService.findByUser(),
+                        "Buscar carrinhos por usuário"
+                ),
                 "O usuário não deve possuir carrinho ativo"
         );
 
         if (context.getCartId() != null) {
             assertEmptyCartList(
-                    fetchCartList(cartService.findById(context.getCartId()), "Buscar carrinho removido por ID"),
+                    fetchCartList(
+                            cartService.findById(context.getCartId()),
+                            "Buscar carrinho removido por ID"
+                    ),
                     "O ID do carrinho removido não deve existir"
             );
         }

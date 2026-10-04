@@ -1,11 +1,11 @@
 package io.github.acarolinebcosta.serverest.user;
 
+import java.util.Map;
+
 import io.github.acarolinebcosta.serverest.api.ApiConfig;
 import io.restassured.response.Response;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-
-import java.util.Map;
 
 @RequiredArgsConstructor
 public final class UserClient {
@@ -40,4 +40,19 @@ public final class UserClient {
                 .when()
                 .delete("/usuarios/{id}");
     }
+    public Response updateRaw(String id, Map<String, Object> rawPayload) {
+        return config.request()
+            .pathParam("id", id)
+            .body(rawPayload)
+            .when()
+            .put("/usuarios/{id}");
+}
+
+    public Response updateRawWithoutToken(String id, Map<String, Object> rawPayload) {
+        return config.request()
+            .pathParam("id", id)
+            .body(rawPayload)
+            .when()
+            .put("/usuarios/{id}");
+}
 }
