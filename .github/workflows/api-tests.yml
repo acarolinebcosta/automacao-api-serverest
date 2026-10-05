@@ -23,7 +23,7 @@ jobs:
           cache: maven
 
       - name: Execute API automated tests
-        run: ./mvnw clean test
+        run: mvn clean test
         env:
           SERVEREST_TEST_PASSWORD: ${{ secrets.SERVEREST_TEST_PASSWORD }}
 
