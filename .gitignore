@@ -12,3 +12,7 @@ allure-report/
 .env.*
 !.env.example
 output.txt
+.env
+.allure/
+test-output.txt
+.github/modernize/
