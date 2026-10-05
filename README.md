@@ -354,7 +354,7 @@ BUILD SUCCESS
 
 Composição:
 
-- **46 cenários BDD** de integração distribuídos em 10 features;
+- **53 cenários BDD** de integração distribuídos em 10 features;
 - **7 testes técnicos** do `EvidenceSanitizer`.
 
 Tempo médio de execução local: **~4 min 30 s**.
