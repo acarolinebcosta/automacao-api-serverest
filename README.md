@@ -341,19 +341,20 @@ Após a execução, `target/allure-results/` é preservado como artefato mesmo e
 
 ---
 
+
+
 ## Resultado atual
 
 ```text
-Tests run: 41
+Tests run: 53
 Failures: 0
 Errors: 0
 Skipped: 0
 BUILD SUCCESS
-```
 
 Composição:
 
-- **34 cenários BDD** de integração distribuídos em 10 features;
+- **46 cenários BDD** de integração distribuídos em 10 features;
 - **7 testes técnicos** do `EvidenceSanitizer`.
 
 Tempo médio de execução local: **~4 min 30 s**.
