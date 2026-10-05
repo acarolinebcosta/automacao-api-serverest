@@ -2,53 +2,41 @@ name: API Tests
 
 on:
   push:
-    branches:
-      - main
-
+    branches: [ main ]
   pull_request:
-    branches:
-      - main
-
-  workflow_dispatch:
-
-permissions:
-  contents: read
+    branches: [ main ]
 
 jobs:
   api-tests:
     name: Execute API automated tests
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-
-    env:
-      SERVEREST_TEST_PASSWORD: ${{ secrets.SERVEREST_TEST_PASSWORD }}
-
+    runs-on: ubuntu-22.04  
+    timeout-minutes: 60   
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Java 21
+      - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: "21"
+          java-version: '21'
           cache: maven
 
-      - name: Run API tests
-        run: mvn --batch-mode --no-transfer-progress clean test
+      - name: Execute API automated tests
+        run: ./mvnw clean test
+        env:
+          SERVEREST_TEST_PASSWORD: ${{ secrets.SERVEREST_TEST_PASSWORD }}
 
-      - name: Upload Surefire results
+      - name: Upload Surefire reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: surefire-results
-          path: target/surefire-reports/
-          if-no-files-found: ignore
+          name: surefire-reports
+          path: target/surefire-reports
 
       - name: Upload Allure results
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: allure-results
-          path: target/allure-results/
-          if-no-files-found: ignore
+          path: target/allure-results
