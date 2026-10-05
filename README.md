@@ -1,8 +1,33 @@
 # ServeRest API Quality Automation
 
+[![API Tests](https://github.com/acarolinebcosta/automacao-api-serverest/actions/workflows/api-tests.yml/badge.svg)](https://github.com/acarolinebcosta/automacao-api-serverest/actions/workflows/api-tests.yml)
+![Java](https://img.shields.io/badge/Java-21-blue)
+![Cucumber](https://img.shields.io/badge/Cucumber-7.x-green)
+![REST Assured](https://img.shields.io/badge/REST%20Assured-6.x-orange)
+![Allure](https://img.shields.io/badge/Report-Allure-yellow)
+
 Automação de testes de API construída sobre a [ServeRest](https://serverest.dev), cobrindo o fluxo de compra ponta a ponta (usuário → login → produto → carrinho → conclusão/cancelamento) e cenários adicionais priorizados por risco.
 
 Java 21 · REST Assured · Cucumber · JUnit 5 · JSON Schema · Allure · GitHub Actions.
+
+---
+
+## Resultado atual
+
+```text
+Tests run: 53
+Failures: 0
+Errors: 0
+Skipped: 0
+BUILD SUCCESS
+```
+
+Composição:
+
+- **46 cenários BDD** de integração, distribuídos em 10 features;
+- **7 testes técnicos** do `EvidenceSanitizer`.
+
+Tempo médio de execução local: **~4 min 30 s**.
 
 ---
 
@@ -64,23 +89,19 @@ As validações não se limitam ao status HTTP. Sempre que aplicável, a automa�
 Os resultados esperados são calculados de forma independente a partir dos dados controlados pela automação, sem reutilizar a resposta da API como fonte da expectativa.
 
 ---
+
 ## Análise de qualidade
 
 ### Cenários mais críticos
 
-**Fluxo completo usuário → login → produto → carrinho → conclusão**
-É o fluxo de negócio obrigatório. Qualquer falha em qualquer etapa
-inviabiliza a compra. Valida encadeamento de dados (token, userId,
-productId) e persistência ponta a ponta.
+**Fluxo completo usuário → login → produto → carrinho → conclusão**  
+É o fluxo de negócio obrigatório. Qualquer falha em qualquer etapa inviabiliza a compra. Valida encadeamento de dados (token, `userId`, `productId`) e persistência ponta a ponta.
 
-**Cancelamento com restauração de estoque**
-Afeta diretamente o inventário. Um bug silencioso aqui gera divergência
-entre o estoque real e o reportado pela API. O teste valida estoque
-antes e depois da operação.
+**Cancelamento com restauração de estoque**  
+Afeta diretamente o inventário. Um bug silencioso aqui gera divergência entre o estoque real e o reportado pela API. O teste valida estoque antes e depois da operação.
 
-**Atomicidade em carrinho com múltiplos produtos (CT-MULTI-02)**
-Um item com estoque insuficiente não pode gerar atualização parcial nos
-demais. É o cenário que mais expõe problemas de transação.
+**Atomicidade em carrinho com múltiplos produtos (CT-MULTI-02)**  
+Um item com estoque insuficiente não pode gerar atualização parcial nos demais. É o cenário que mais expõe problemas de transação.
 
 ### Riscos identificados
 
@@ -89,21 +110,9 @@ demais. É o cenário que mais expõe problemas de transação.
 - **Vazamento de credenciais** em relatórios Allure.
 - **Quebra de contrato** não detectada até o consumidor falhar.
 
-### O que foi testado
-
-Fluxo principal ponta a ponta, cenários negativos em todos os domínios,
-condições de fronteira de estoque, atomicidade, integridade entre
-recursos, autorização, contract testing via JSON Schema e sanitização
-de evidências.
-
-### O que não foi testado
-
-- **Rate limiting** — API pública; testar pode bloquear execuções.
-- **Performance e carga** — exigem ferramenta específica e ambiente controlado.
-- **Fuzzing de payload** — baixo retorno para o fluxo de negócio.
-- **Permissões por perfil** — a ServeRest não implementa RBAC.
-- **Respostas 5xx** — não provocadas artificialmente.
 ---
+
+## Cobertura
 
 ### Cobertura solicitada
 
@@ -224,16 +233,16 @@ A instância do `ScenarioContext` é isolada por cenário pela injeção de depe
 Features em `src/test/resources/features/`:
 
 ```text
-cadastro_usuario
-fluxo_compra
-fluxo_cancelamento
-limites_estoque
-multiplos_produtos
-regras_carrinho
-usuarios_negativos
-autenticacao_negativa
-produtos_negativos
-carrinhos_negativos
+cadastro_usuario.feature
+fluxo_compra.feature
+fluxo_cancelamento.feature
+limites_estoque.feature
+multiplos_produtos.feature
+regras_carrinho.feature
+usuarios_negativos.feature
+autenticacao_negativa.feature
+produtos_negativos.feature
+carrinhos_negativos.feature
 ```
 
 Cenários escritos em português para leitura da regra de negócio; classes, métodos e identificadores Java em inglês.
@@ -341,23 +350,57 @@ Após a execução, `target/allure-results/` é preservado como artefato mesmo e
 
 ---
 
+## Troubleshooting
 
+### `The job was not acquired by Runner of type hosted even after multiple attempts`
 
-## Resultado atual
+**Sintoma:** o job falha antes de executar qualquer passo, com essa mensagem e, às vezes, acompanhado de `Internal server error. Correlation ID: ...`.
 
-```text
-Tests run: 53
-Failures: 0
-Errors: 0
-Skipped: 0
-BUILD SUCCESS
+**Causa:** indisponibilidade temporária ou alta demanda nos runners hospedados do GitHub. Não é um problema do código do projeto.
 
-Composição:
+**Como resolver:**
 
-- **53 cenários BDD** de integração distribuídos em 10 features;
-- **7 testes técnicos** do `EvidenceSanitizer`.
+1. Reexecutar o job pela opção **“Re-run failed jobs”** na página da execução.
+2. Verificar o status oficial em <https://www.githubstatus.com/>.
+3. Fazer um novo commit trivial (ex.: ajuste de documentação) para forçar uma nova execução.
+4. Confirmar que Actions está habilitado em **Settings → Actions → General**.
+5. Se persistir por horas, abrir chamado no suporte do GitHub informando o `Correlation ID` exibido no log.
 
-Tempo médio de execução local: **~4 min 30 s**.
+### `ubuntu-latest label will migrate to Ubuntu 26`
+
+**Sintoma:** notificação (não erro) no log do workflow.
+
+**Causa:** aviso de migração automática do rótulo `ubuntu-latest`. A partir de **19 de outubro de 2026**, o apelido passa a apontar para Ubuntu 26.04, substituindo o Ubuntu 24.04.
+
+**Como resolver:** fixar a versão do runner no workflow:
+
+```yaml
+runs-on: ubuntu-22.04
+```
+
+### Falha de conexão com `https://serverest.dev`
+
+**Sintoma:** timeouts ou `ConnectException` durante a execução.
+
+**Causa:** instabilidade do ambiente público ou bloqueio de rede.
+
+**Como resolver:**
+
+- aumentar o timeout via `-Dapi.timeout.ms=20000`;
+- executar uma instância local do ServeRest e usar `-DbaseUrl=http://localhost:3000`;
+- verificar conectividade com o host antes da execução.
+
+### Falha na limpeza (`@After`)
+
+**Sintoma:** cenário principal passa, mas o hook de limpeza falha e reprova a execução.
+
+**Causa:** recursos remanescentes não puderam ser excluídos — normalmente por expiração de token (600 s no ambiente público) ou indisponibilidade do ambiente.
+
+**Como resolver:**
+
+- verificar os anexos do Allure para identificar o recurso e o motivo da falha;
+- confirmar se o token ainda era válido no momento da limpeza;
+- reexecutar o cenário em uma janela de tempo menor.
 
 ---
 
@@ -399,13 +442,15 @@ Evitaria tentar reproduzir repetidamente pela interface. Em problema intermitent
 
 A estratégia atual prioriza o fluxo solicitado e regras críticas de carrinho. Como evolução:
 
-- acesso a recursos protegidos com token válido de usuário comum (permissões);
-- token expirado;
-- regras específicas de exclusão de recursos em uso (produto/usuário com carrinho ativo);
-- limites adicionais de payload;
-- testes de performance, carga, resiliência e segurança.
-
-Respostas `5xx` não são provocadas artificialmente nesta implementação.
+- **Rate limiting** — API pública; testar pode bloquear execuções.
+- **Performance, carga e resiliência** — exigem ferramenta específica e ambiente controlado.
+- **Fuzzing de payload** — baixo retorno para o fluxo de negócio.
+- **Permissões por perfil** — a ServeRest não implementa RBAC.
+- **Respostas 5xx** — não provocadas artificialmente.
+- **Acesso a recursos protegidos com token válido de usuário comum** (permissões).
+- **Token expirado**.
+- **Regras específicas de exclusão de recursos em uso** (produto/usuário com carrinho ativo).
+- **Limites adicionais de payload**.
 
 ---
 
@@ -426,16 +471,12 @@ Não foram adicionadas camadas como interfaces, factories ou service locators qu
 
 ---
 
-## Documentação complementar
-
-Estratégia, decisões de cobertura e critérios de priorização estão descritos neste próprio README. Para instruções operacionais, consulte as seções **Execução** e **Integração contínua**.
-
 ## Evidências
 
 Screenshots do relatório Allure em `docs/evidence/screenshots/`:
 
-- Dashboard com a execução completa;
-- Detalhamento de um cenário E2E;
-- Evidência HTTP sanitizada com credenciais omitidas.
+- [Dashboard com a execução completa](docs/evidence/screenshots/dashboard.png)
+- [Detalhamento de um cenário E2E](docs/evidence/screenshots/e2e-detalhe.png)
+- [Evidência HTTP sanitizada com credenciais omitidas](docs/evidence/screenshots/http-sanitizado.png)
 
 Para gerar o relatório localmente: `mvn allure:serve`.
